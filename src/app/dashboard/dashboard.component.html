@@ -1,0 +1,32 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async) === false">
+    <mat-toolbar><img src="assets/images/onpe.png" style="width: 80%; height: 90%;"></mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item routerLink="./top-card"> <mat-icon>dashboard</mat-icon>Principal</a>
+      <a mat-list-item routerLink="./usuario"> <mat-icon>face</mat-icon>Usuarios</a>
+      <a mat-list-item routerLink="./candidatos"> <mat-icon>perm_identity</mat-icon>Candidatos</a>
+      <a mat-list-item routerLink="./alumno"> <mat-icon>supervisor_account</mat-icon>Alumnos</a>
+      <a mat-list-item routerLink="./reporte"> <mat-icon>assessment</mat-icon>Reportes</a>
+      <a mat-list-item routerLink="./Acerca"> <mat-icon>contact_support</mat-icon>Acerca </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>Sistema Web de Voto Electrónico</span>
+    </mat-toolbar>
+    <div class="main">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
