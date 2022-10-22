@@ -1,4 +1,12 @@
-<h1 mat-dialog-title>{{data.titulo}}</h1>
+<p-dialog
+header="Autorizar Evento"
+[(visible)]="isVisible"
+styleClass="atributos"
+[baseZIndex]="10000"
+[closable]="false"
+[modal]="true"
+appendTo="body">
+<h1 mat-dialog-title>sss</h1>
 <div mat-dialog-content>
   <form class="example-form">
   <mat-form-field appearance="outline" class="example-full-width">
@@ -35,5 +43,6 @@
 </div>
 <div class="example-button-row" style="text-align: end;">
   <button mat-raised-button color="primary">Aceptar</button>
-  <button mat-raised-button color="warn" (click)="onNoClick()">Cancelar</button>
+  <button mat-raised-button color="warn" (click)="closeModal()">Cancelar</button>
 </div>
+</p-dialog>

@@ -1,4 +1,4 @@
-import { Input, Component, OnInit, Inject } from '@angular/core';
+import { Input, Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ModalCandidatos } from '../candidatos-data';
 import { CandidatosComponent } from '../candidatos.component';
@@ -10,18 +10,19 @@ import { CandidatosComponent } from '../candidatos.component';
 })
 export class ModalCandidatosComponent {
   hide = true;
+  isVisible: boolean = true;
+  @Input() dataItem: any = null;
+  @Output() showModal= new EventEmitter<boolean>();
   constructor(
-    public dialogRef: MatDialogRef<CandidatosComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ModalCandidatos
   ) {}
 
 
-  ngOnInit(): void {
-    console.log("dasda",this.data);
+  ngOnInit() {
+    console.log("modal");
   }
-
-  onNoClick(): void {
-    this.dialogRef.close();
+  closeModal(){
+    this.isVisible = false;
+    this.showModal.emit(false);
   }
 }
 

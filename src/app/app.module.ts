@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -39,6 +39,16 @@ import {SliderModule} from 'primeng/slider';
 import { AlumnosComponent } from './alumnos/alumnos.component';
 import { TopCardsComponent } from './top-cards/top-cards.component';
 import { KnobModule } from "primeng/knob";
+import { ModalAlumnosComponent } from './alumnos/modalAlumnos/modalAlumnos.component';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatCardModule} from '@angular/material/card';
+import { ReportesComponent } from './reportes/reportes.component';
+import { ReporteTotalComponent } from './reporteTotal/reporteTotal.component';
+import { DialogModule } from 'primeng/dialog';
+import { UsuarioModalModule } from './usuarios/usuarioModal.module';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ConfirmationService} from 'primeng/api';
+
 
 @NgModule({
   declarations: [
@@ -47,11 +57,13 @@ import { KnobModule } from "primeng/knob";
     DashboardComponent,
     AboutComponent,
     ModalCandidatosComponent,
-    ModalUsuariosComponent,
     CandidatosComponent,
-    UsuariosComponent,
     AlumnosComponent,
     TopCardsComponent,
+    ModalAlumnosComponent,
+    ReportesComponent,
+    ReporteTotalComponent,
+
    ],
   imports: [
     AppRoutingModule,
@@ -84,7 +96,13 @@ import { KnobModule } from "primeng/knob";
     MatDialogModule,
     MatButtonModule,
     MatInputModule,
-    KnobModule
+    KnobModule,
+    MatMenuModule,
+    MatCardModule,
+    ReactiveFormsModule,
+    UsuarioModalModule,
+    DialogModule,
+
   ],
 
   providers: [MessageService ],

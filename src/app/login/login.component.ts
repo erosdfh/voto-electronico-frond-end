@@ -34,11 +34,11 @@ export class LoginComponent {
 
   }
 
-  listarUsuario(){
+  /*listarUsuario(){
     this.usuarioService.listarUsuario().subscribe((result: any) => {
       this.lista = result.dato;
       console.log(this.lista);
   }, (error: HttpErrorResponse) => {
   });
-  }
+  }*/
 }

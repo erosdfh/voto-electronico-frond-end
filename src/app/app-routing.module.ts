@@ -10,6 +10,7 @@ import { ReportesComponent } from './reportes/reportes.component';
 import { AboutComponent } from './about/about.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { CandidatosComponent } from './candidatos/candidatos.component';
+import { ReporteTotalComponent } from './reporteTotal/reporteTotal.component';
 const routes: Routes = [
   {
     path: '',
@@ -60,6 +61,12 @@ const routes: Routes = [
         {
           path: 'Acerca',
           component: AboutComponent,
+          data: {
+          title: 'Login Page'
+        }},
+        {
+          path: 'ReporteTotal',
+          component: ReporteTotalComponent,
           data: {
           title: 'Login Page'
         }}

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { UsuarioService } from '../services/usuario.service';
 import {Product,TopSelling, TableRows, Employee} from './candidatos-data';
 import { ModalCandidatosComponent } from './modalCandidatos/modalCandidatos.component';
 
@@ -20,21 +21,46 @@ pagecustom = 4;
 customers: any[];
 loading: boolean = true;
 activityValues: number[] = [0, 100];
+verModalCandidato: boolean = false;
+listaCandidatos: any = [];
+buscarCandidato: string = '';
 getPageSymbol(current: number) {
 return ['A', 'B', 'C', 'D', 'E', 'F', 'G'][current - 1];
 }
-  constructor(public dialog: MatDialog) {
-
+  constructor(
+    public dialog: MatDialog,
+    private usuarioService:UsuarioService
+    ) {
     this.topSelling=TopSelling;
-
     this.trow=Employee;
   }
+  ngOnInit(){
+    this.listarCandidatos();
+  }
+  buscarCandidatos(e:any){
+    if(e.key == "Enter"){
+      this.listarCandidatos();
+    }
+    console.log(e);
+    console.log(this.buscarCandidato);
+  }
 
+  listarCandidatos(){
+    let param  = +(this.buscarCandidato ? +this.buscarCandidato : "")
+    console.log(param);
+    this.usuarioService.listarCandidato(param).subscribe(
+      (result:any)=>{
+        this.listaCandidatos = result
+        console.log(result);
+      }
+    )
+  }
   openDialog(e:string): void {
-    const dialogRef = this.dialog.open(ModalCandidatosComponent, {
-      width: '500px',
-      disableClose:true,
-      data: {titulo:e},
-    });
+    this.verModalCandidato = true;
+}
+
+abrirModalCandidato(e:any){
+  this.verModalCandidato = e;
+  console.log(e);
 }
 }

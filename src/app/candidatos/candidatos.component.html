@@ -4,7 +4,7 @@
 <div style="text-align: end;">
   <button pButton type="button" class="p-button-info" (click)="openDialog('Nuevo Usuario')">Nuevo</button>
 </div>
-<p-table #dt1 [value]="topSelling" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
+<p-table #dt1 [value]="listaCandidatos.items" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
 	[rowsPerPageOptions]="[10,25,50]" styleClass="p-datatable-customers p-datatable-gridlines"
 	[paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
 	[globalFilterFields]="['name','country.name','representative.name','status']">
@@ -13,15 +13,25 @@
 
         <span class="p-input-icon-left ml-auto">
             <i class="pi pi-search"></i>
-            <input pInputText type="text"  placeholder="Buscar candidatos" />
+            <input pInputText type="text"  placeholder="Buscar candidatos" [(ngModel)]="buscarCandidato" (keyup)="buscarCandidatos($event)"/>
         </span>
     </div>
 </ng-template>
 	<ng-template pTemplate="header">
 		<tr>
+      <th>
+				<div class="p-d-flex p-jc-between p-ai-center">
+					Codigo
+				</div>
+			</th>
 			<th>
 				<div class="p-d-flex p-jc-between p-ai-center">
 					Candidato
+				</div>
+			</th>
+			<th>
+				<div class="p-d-flex p-jc-between p-ai-center">
+					Perfil
 				</div>
 			</th>
 			<th>
@@ -31,17 +41,12 @@
 			</th>
 			<th>
 				<div class="p-d-flex p-jc-between p-ai-center">
-					Estado
-				</div>
-			</th>
-			<th>
-				<div class="p-d-flex p-jc-between p-ai-center">
 					Observaciones
 				</div>
 			</th>
 			<th>
 				<div class="p-d-flex p-jc-between p-ai-center">
-					Cant. Integrantes
+					Cant. Regidores
 				</div>
 			</th>
 			<th style="width: 10rem">
@@ -53,21 +58,24 @@
 	</ng-template>
 	<ng-template pTemplate="body" let-topSelling>
 		<tr>
-			<td>
-				{{topSelling.uname}}
+      <td >
+				{{topSelling.idCandidato}}
 			</td>
 			<td>
-        <img [alt]="topSelling.productName" src="assets/images/candidato1.png" width="32" style="vertical-align: middle;" />
-				<span class="image-text">{{topSelling.productName}}</span>
+				{{topSelling.candidato}}
 			</td>
 			<td>
-				<span class="image-text">{{topSelling.productName}}</span>
+        <span class="image-text">{{topSelling.image}}</span>
+			</td>
+			<td>
+        <img [alt]="topSelling.image" src="assets/images/candidato1.png" width="32" style="vertical-align: middle;" />&nbsp;
+				<span class="image-text">{{topSelling.partidoPolitico}}</span>
 			</td>
 			<td>
 
 			</td>
 			<td>
-        <span [class]="'customer-badge status-' + topSelling.status">{{topSelling.productName}}</span>
+        <span [class]="'customer-badge status-' + topSelling.status" style="content: center;">{{topSelling.regidor.length}}</span>
 			</td>
 			<td class="sizes">
         <button pButton pRipple type="button" icon="pi pi-pencil" styleClass="p-button-sm" class="p-button-rounded p-button-text" (click)="openDialog('Editar Candidato')"></button>
@@ -83,3 +91,9 @@
 	</ng-template>
 </p-table>
 </div>
+
+<app-modalCandidatos
+*ngIf="verModalCandidato"
+(showModal)="abrirModalCandidato($event)"
+[dataItem]="listaCandidatos">
+</app-modalCandidatos>
