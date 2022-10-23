@@ -1,53 +1,63 @@
-<p-dialog
-header="Autorizar Evento"
-[(visible)]="isVisible"
-styleClass="atributos"
-[baseZIndex]="10000"
-[closable]="false"
-[modal]="true"
-appendTo="body">
-<h1 mat-dialog-title></h1>
-<div mat-dialog-content>
-  <form class="example-form" [formGroup]="formGroupParent">
-    <mat-form-field appearance="outline" class="example-full-width">
-      <mat-label>Apellido Paterno</mat-label>
-      <input matInput formControlName="first_surname">
-    </mat-form-field>
-  <mat-form-field appearance="outline" class="example-full-width">
-    <mat-label>Apellido Materno</mat-label>
-    <input matInput formControlName="second_surname">
-  </mat-form-field >
-  <mat-form-field appearance="outline" class="example-full-width">
-    <mat-label>Nombres</mat-label>
-    <input matInput formControlName="name">
-  </mat-form-field>
-  <mat-form-field appearance="outline" class="example-full-width">
-    <mat-label>Correo</mat-label>
-    <input matInput formControlName="email">
-  </mat-form-field>
-  <mat-form-field appearance="outline" class="example-full-width">
-    <mat-label>Usuario</mat-label>
-    <input matInput formControlName="name_user">
-  </mat-form-field>
-  <mat-form-field appearance="outline" class="example-full-width">
-    <mat-label>Password</mat-label>
-    <input matInput [type]="hide ? 'password' : 'text'" formControlName="psw">
-    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-    </button>
-  </mat-form-field>
-  <mat-form-field appearance="outline" class="example-full-width">
-    <mat-label>Confirmar Password</mat-label>
-    <input matInput [type]="hide ? 'password' : 'text'">
-    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-    </button>
-  </mat-form-field>
-</form>
-</div>
-<div class="example-button-row" style="text-align: end;">
-  <button mat-raised-button color="primary" (click)=" seleccion()">Aceptar</button>
-  <button mat-raised-button color="warn" (click)="closeModal()">Cancelar</button>
-</div>
+<p-dialog header="Autorizar Evento" [(visible)]="isVisible" styleClass="atributos" [baseZIndex]="10000"
+  [closable]="false" [modal]="true" appendTo="body">
+  <h1 mat-dialog-title></h1>
+  <div mat-dialog-content>
+    <form class="example-form" [formGroup]="formGroupParent">
+      <mat-form-field appearance="outline" class="example-full-width">
+        <mat-label>Apellido Paterno</mat-label>
+        <input matInput formControlName="first_surname">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="example-full-width">
+        <mat-label>Apellido Materno</mat-label>
+        <input matInput formControlName="second_surname">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="example-full-width">
+        <mat-label>Nombres</mat-label>
+        <input matInput formControlName="name">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="example-full-width">
+        <mat-label>Correo</mat-label>
+        <input matInput formControlName="email">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="example-full-width">
+        <mat-label>Usuario</mat-label>
+        <input matInput formControlName="name_user">
+      </mat-form-field>
+    </form>
+    <!--agregar y quitar contraseña-->
+    <div *ngIf="verContra" style="margin-top: -19px; margin-left: 45%; " [align]="'center'">
+      <button mat-icon-button (click)="agregarC()">&nbsp;&nbsp;&nbsp;&nbsp; Editar Contraseña <mat-icon color="primary">
+          add</mat-icon></button>
+    </div>
+    <div *ngFor="let nitem of formGroupParent.get('contrasenias')['controls']; let nindex = index;">
+      <div>
+        <ng-container [formGroup]="nitem">
+          <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Password</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" [formControlName]="'psw'">
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Confirmar Password</mat-label>
+            <input matInput [type]="hideConfir ? 'password' : 'text'" [formControlName]="'confirContrasenia'">
+            <button mat-icon-button matSuffix (click)="hideConfir = !hideConfir" [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide">
+              <mat-icon>{{hideConfir ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+        </ng-container>
+        <div *ngIf="verContra" style="margin-top: -19px; margin-left: 80%; " [align]="'center'">
+          <button mat-icon-button (click)="eliminarC(nindex)">Ocultar <mat-icon color="primary">delete</mat-icon>
+            </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="example-button-row" style="text-align: end;">
+    <button mat-raised-button color="primary" (click)=" seleccion()">Aceptar</button>
+    <button mat-raised-button color="warn" (click)="closeModal()">Cancelar</button>
+  </div>
 </p-dialog>
-

@@ -11,14 +11,14 @@ import { CandidatosComponent } from '../candidatos.component';
 export class ModalCandidatosComponent {
   hide = true;
   isVisible: boolean = true;
-  @Input() dataItem: any = null;
+  @Input() dataItems: any = null;
   @Output() showModal= new EventEmitter<boolean>();
   constructor(
   ) {}
 
 
   ngOnInit() {
-    console.log("modal");
+    console.log("modal", this.dataItems);
   }
   closeModal(){
     this.isVisible = false;

@@ -1,10 +1,7 @@
 import { Input, Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { UsuarioService } from 'src/app/services/usuario.service';
-import { ModalUsuarios } from '../usuarios-data';
-import { UsuariosComponent } from '../usuarios.component';
 
 @Component({
   selector: 'app-modalUsuarios',
@@ -14,7 +11,9 @@ import { UsuariosComponent } from '../usuarios.component';
 export class ModalUsuariosComponent {
   isVisible: boolean = true;
   hide = true;
-  formGroupParent : FormGroup;
+  hideConfir = true;
+  formGroupParent : any = [];
+  verContra : boolean = false;
   @Input() dataItem: any = null;
   @Output() showModal= new EventEmitter<boolean>();
   idUsuario: number;
@@ -24,25 +23,27 @@ export class ModalUsuariosComponent {
     private fb : FormBuilder,
     private messageService: MessageService,
   ) {
+
+  }
+
+
+  ngOnInit(){
     this.formGroupParent = this.fb.group({
       email: new FormControl ('', [Validators.required, Validators.email]),
       first_surname: new FormControl ('', [Validators.required]),
       name:  new FormControl ('', [Validators.required]),
       name_user:  new FormControl ('', [Validators.required]),
-      psw: new FormControl ('', [Validators.required]),
-      second_surname: new FormControl ('', [Validators.required])
+      second_surname: new FormControl ('', [Validators.required]),
+      contrasenias : this.fb.array([])
     });
-  }
-
-
-  ngOnInit(): void {
     console.log("modal usuario", this.dataItem);
     if(this.dataItem.titulo == "Editar"){
+      this.verContra = true;
       this.formGroupParent.controls['email'].setValue(this.dataItem.e.email);
       this.formGroupParent.controls['first_surname'].setValue(this.dataItem.e.first_surname);
       this.formGroupParent.controls['name'].setValue(this.dataItem.e.name);
       this.formGroupParent.controls['name_user'].setValue(this.dataItem.e.name_user);
-      this.formGroupParent.controls['psw'].setValue(this.dataItem.psw);
+      //this.formGroupParent.controls['psw'].setValue(this.dataItem.psw);
       this.formGroupParent.controls['second_surname'].setValue(this.dataItem.e.second_surname);
       this.idUsuario = this.dataItem.e.idUsers
     }else if(this.dataItem.titulo == "Ver"){
@@ -54,6 +55,18 @@ export class ModalUsuariosComponent {
         psw: new FormControl ({value: this.dataItem.e.psw, disabled : true}),
         second_surname: new FormControl ({value: this.dataItem.e.second_surname, disabled : true}),
       });
+      this.verContra = false;
+    } else if(this.dataItem.titulo == "Nuevo" ){
+      this.formGroupParent = this.fb.group({
+        email: new FormControl ('', [Validators.required, Validators.email]),
+        first_surname: new FormControl ('', [Validators.required]),
+        name:  new FormControl ('', [Validators.required]),
+        name_user:  new FormControl ('', [Validators.required]),
+        second_surname: new FormControl ('', [Validators.required]),
+        contrasenias : this.fb.array([])
+      });
+      this.verContra = false;
+      this.verOcultarContraseña();
     }
   }
 
@@ -69,10 +82,20 @@ export class ModalUsuariosComponent {
     }
   }
   registUsuario(){
+    if(this.formGroupParent.value?.confirContrasenia == this.formGroupParent.value?.psw){
+      this.formGroupParent.controls['confirContrasenia'].setErrors(null);
+      this.formGroupParent.controls['psw'].setErrors(null);
+    }
     this.formGroupParent.markAllAsTouched();
     if(this.formGroupParent.invalid){
       this.messageService.add({severity:'warn', summary: 'Advertencia', detail: 'Debe ingresar documento'});
+      console.log("formgroup", this.formGroupParent);
       return;
+    }
+    if(this.formGroupParent.value?.confirContrasenia != this.formGroupParent.value?.psw){
+      this.formGroupParent.controls['confirContrasenia'].setErrors({valid: false});
+      this.formGroupParent.controls['psw'].setErrors({valid: false});
+      return ;
     }
     let param = {
         "email": ""+this.formGroupParent.value?.email,
@@ -117,6 +140,29 @@ export class ModalUsuariosComponent {
       });
   }
 
+  verOcultarContraseña(){
+    console.log(this.formGroupParent.controls.contrasenias);
+    (this.formGroupParent.controls.contrasenias as FormArray).push(
+      this.fb.group({
+        psw: ['', Validators.required],
+        confirContrasenia: ['', Validators.required],
+      }));
+  }
+  agregarC(){
+    if(+(this.formGroupParent.controls.contrasenias as FormArray).length > 0){
+      return;
+    }
+    (this.formGroupParent.controls.contrasenias as FormArray).push(
+      this.fb.group({
+        psw: ['', Validators.required],
+        confirContrasenia: ['', Validators.required],
+      }));
+  }
+  eliminarC(nindex:number){
+    if(+(this.formGroupParent.controls.contrasenias as FormArray).length > 0){
+      (this.formGroupParent.controls.contrasenias as FormArray).removeAt(nindex);
+    }
+  }
 }
 
 

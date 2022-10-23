@@ -51,8 +51,7 @@ export class UsuariosComponent implements OnInit {
   openDialog(e:any, editar:string): void {
     this.listeditarUsuario = {e, titulo:editar}  ;
     this.verModalUsuario = true;
-
-}
+  }
 
 buscarUsuario(e:any){
   if(e.key == "Enter"){
