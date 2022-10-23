@@ -2,7 +2,13 @@
 <div class="card" style="margin: 3%;">
   <h1>Lista de Alumnos</h1>
   <div style="text-align: end;">
-    <button pButton type="button" class="p-button-info" (click)="openDialogAlumno('Nuevo Alumno')">Nuevo</button>
+    <mat-form-field style="margin-bottom: -16px;">
+      <mat-label>Carga Masiva</mat-label>
+      <ngx-mat-file-input>
+        <mat-icon ngxMatFileInputIcon>folder</mat-icon>
+      </ngx-mat-file-input>
+    </mat-form-field> &nbsp;&nbsp;&nbsp;
+    <button pButton type="button" class="p-button-info" (click)="openDialogAlumno(listaAlumno, 'Nuevo Alumno')">Nuevo</button>
   </div>
   <p-table #dt1 [value]="trow" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
     [rowsPerPageOptions]="[10,25,50]" styleClass="p-datatable-customers p-datatable-gridlines"
@@ -70,8 +76,8 @@
           <span [class]="'customer-badge status-' + tr.status">{{tr.uname}}</span>
         </td>
         <td class="sizes">
-          <button pButton pRipple type="button" icon="pi pi-pencil" styleClass="p-button-sm" class="p-button-rounded p-button-text" (click)="openDialogAlumno('Editar Alumno')"></button>
-          <button pButton pRipple type="button" icon="pi pi-eye" styleClass="p-button-sm" class="p-button-rounded p-button-secondary p-button-text" (click)="openDialogAlumno('Ver Alumno')"></button>
+          <button pButton pRipple type="button" icon="pi pi-pencil" styleClass="p-button-sm" class="p-button-rounded p-button-text" (click)="openDialogAlumno(tr,'Editar Alumno')"></button>
+          <button pButton pRipple type="button" icon="pi pi-eye" styleClass="p-button-sm" class="p-button-rounded p-button-secondary p-button-text" (click)="openDialogAlumno(tr, 'Ver Alumno')"></button>
           <button pButton pRipple type="button" icon="pi pi-trash"styleClass="p-button-sm"  class="p-button-rounded p-button-success p-button-text"></button>
         </td>
       </tr>
@@ -84,3 +90,8 @@
   </p-table>
   </div>
 
+  <app-modalAlumnos
+  *ngIf="verModalAlumno"
+  (showModal)="abrirModalCandidato($event)"
+  [dataItems1]="listaAlumno">
+  </app-modalAlumnos>

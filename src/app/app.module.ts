@@ -48,7 +48,8 @@ import { DialogModule } from 'primeng/dialog';
 import { UsuarioModalModule } from './usuarios/usuarioModal.module';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
-
+import {NgxMatFileInputModule} from '@angular-material-components/file-input';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -102,7 +103,8 @@ import {ConfirmationService} from 'primeng/api';
     ReactiveFormsModule,
     UsuarioModalModule,
     DialogModule,
-
+    NgxMatFileInputModule,
+    MatSelectModule
   ],
 
   providers: [MessageService ],

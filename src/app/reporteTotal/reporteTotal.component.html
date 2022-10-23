@@ -1,8 +1,14 @@
 
 <div class="card" style="margin: 3%;">
-  <h1>Lista de Alumnos</h1>
+  <h1>Reporte Final</h1>
   <div style="text-align: end;">
-    <button pButton type="button" class="p-button-info" >Nuevo</button>
+    <mat-label style="color: #3f51b5;">Exportar</mat-label>&nbsp;
+    <button mat-icon-button >
+      <img mat-card-image src="assets/images/excel.png" style="width: 32px; height: 32px; cursor: pointer;">
+    </button>
+    <button mat-icon-button>
+      <img mat-card-image src="assets/images/pdf.png" style="width: 30px; height: 30px; cursor: pointer;">
+    </button>
   </div>
   <p-table #dt1 [value]="trow" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
     [rowsPerPageOptions]="[10,25,50]" styleClass="p-datatable-customers p-datatable-gridlines"

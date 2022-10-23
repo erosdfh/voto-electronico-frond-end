@@ -1,8 +1,5 @@
-import { Component, OnInit,Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ModalCandidatos } from 'src/app/candidatos/candidatos-data';
-import { CandidatosComponent } from 'src/app/candidatos/candidatos.component';
-
+import { Component, OnInit,Inject,EventEmitter } from '@angular/core';
+import { Input,  Output } from '@angular/core';
 @Component({
   selector: 'app-modalAlumnos',
   templateUrl: './modalAlumnos.component.html',
@@ -10,16 +7,19 @@ import { CandidatosComponent } from 'src/app/candidatos/candidatos.component';
 })
 export class ModalAlumnosComponent implements OnInit {
   hide = true;
+  isVisible: boolean = true;
+  @Input() dataItems1: any = null;
+  @Output() showModal= new EventEmitter<Boolean>();
+
   constructor(
-    public dialogRef: MatDialogRef<CandidatosComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ModalCandidatos
   ) { }
 
   ngOnInit() {
-    console.log("data", this.data);
+    console.log("data",);
+  }
+  closeModal(){
+    this.isVisible = false;
+    this.showModal.emit(false);
   }
 
-  onNoClick(){
-    this.dialogRef.close();
-  }
 }

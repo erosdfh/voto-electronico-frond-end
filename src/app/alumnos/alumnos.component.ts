@@ -10,7 +10,8 @@ import { ModalAlumnosComponent } from "./modalAlumnos/modalAlumnos.component";
 export class AlumnosComponent {
 
   trow:TableRows[];
-
+  verModalAlumno: boolean = false;
+  listaAlumno: any = [];
   constructor(
     private dialog: MatDialog
   ) {
@@ -20,11 +21,14 @@ export class AlumnosComponent {
   ngOnInit() {
 
   }
-  openDialogAlumno(e:string): void {
-    const dialogRef = this.dialog.open(ModalAlumnosComponent, {
-      width: '500px',
-      disableClose:true,
-      data: {titulo:e},
-    })
+  openDialogAlumno(e:string, editar:any): void {
+    this.listaAlumno = {e, titulo:editar};
+    this.verModalAlumno = true;
+}
+  abrirModalCandidato(e:any){
+    this.verModalAlumno = e;
+    console.log(e);
   }
+
+
 }
