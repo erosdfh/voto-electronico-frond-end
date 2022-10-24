@@ -32,4 +32,10 @@ actualizarUsuario(param:any){
 listarCandidato(idCandidato: number) {
   return this.http.get(this.base + 'candidato/listarCandidato?id=' + idCandidato );
 }
+registrarCandidato(param:any){
+  return this.http.post(`${this.base}candidato/registrarCandidato`, param);
+}
+actualizarCandidato(param:any){
+  return this.http.post(`${this.base}candidato/actualizarCandidato`, param);
+}
 }

@@ -36,27 +36,26 @@
               add</mat-icon></button>
 
         </div>
-        <div class="section">
+        <div >
         <ng-container [formGroup]="nitem">
-        <mat-form-field appearance="outline" class="example-full-width">
+        <mat-form-field appearance="outline" style="width: 100%;  margin: -8px;">
           <mat-label>Nombres y Apellidos</mat-label>
           <input matInput [formControlName]="'nombreApellidoRegidor'">
         </mat-form-field>
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" style="width: 100%;  margin: -10px;">
           <mat-label>Cargo</mat-label>
-          <mat-select [formControlName]="'cargo'">
-            <mat-option>
-             sdfsdfds
-            </mat-option>
-          </mat-select>
+          <input matInput [formControlName]="'cargo'">
         </mat-form-field>
         </ng-container>
       </div>
     </div>
 
   </div>
-  <div class="example-button-row" style="text-align: end;">
-    <button mat-raised-button color="primary">Aceptar</button>
-    <button mat-raised-button color="warn" (click)="closeModal()">Cancelar</button>
-  </div>
+  <ng-template pTemplate="footer">
+    <div class="example-button-row" style="text-align: end; margin-bottom: -10px;">
+      <button mat-raised-button color="primary" (click)="registrarCandidato()">Aceptar</button>
+      <button mat-raised-button color="warn" (click)="closeModal()">Cancelar</button>
+    </div>
+</ng-template>
+
 </p-dialog>

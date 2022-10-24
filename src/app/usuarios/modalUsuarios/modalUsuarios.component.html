@@ -55,8 +55,11 @@
       </div>
     </div>
   </div>
-  <div class="example-button-row" style="text-align: end;">
-    <button mat-raised-button color="primary" (click)=" seleccion()">Aceptar</button>
-    <button mat-raised-button color="warn" (click)="closeModal()">Cancelar</button>
-  </div>
+  <ng-template pTemplate="footer">
+    <div class="example-button-row" style="text-align: end;">
+      <button mat-raised-button color="primary" (click)=" seleccion()">Aceptar</button>
+      <button mat-raised-button color="warn" (click)="closeModal()">Cancelar</button>
+    </div>
+</ng-template>
+
 </p-dialog>
