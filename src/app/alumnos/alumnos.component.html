@@ -2,6 +2,7 @@
 <div class="card" style="margin: 3%;">
   <h1>Lista de Alumnos</h1>
   <div style="text-align: end;">
+    <input type="file" (change)="onFileChange($event)" value="cargar"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <button pButton type="button" class="p-button-info" (click)="openDialogAlumno('Nuevo Alumno')">Nuevo</button>
   </div>
   <p-table #dt1 [value]="trow" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
