@@ -6,6 +6,7 @@
 
 .example-full-width {
   width: 100%;
+
 }
 
 ::-ms-reveal{
@@ -18,4 +19,9 @@
 
 .example-button-row .mat-button-base {
   margin: 8px 8px 8px 0;
+}
+
+
+.section {
+  display: flex;
 }

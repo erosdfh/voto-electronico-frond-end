@@ -55,12 +55,13 @@ return ['A', 'B', 'C', 'D', 'E', 'F', 'G'][current - 1];
       }
     )
   }
-  openDialog(e:string): void {
+  openDialog(e:string, editar:any): void {
+    this.listaCandidatos = {e, titulo:editar};
     this.verModalCandidato = true;
 }
-
 abrirModalCandidato(e:any){
   this.verModalCandidato = e;
+  this.listaCandidatos = [];
   console.log(e);
 }
 }

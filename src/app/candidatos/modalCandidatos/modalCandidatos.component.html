@@ -1,48 +1,61 @@
-<p-dialog
-header="Autorizar Evento"
-[(visible)]="isVisible"
-styleClass="atributos"
-[baseZIndex]="10000"
-[closable]="false"
-[modal]="true"
-appendTo="body">
-<h1 mat-dialog-title>sss</h1>
-<div mat-dialog-content>
-  <form class="example-form">
-  <mat-form-field appearance="outline" class="example-full-width">
-    <mat-label>Nombres</mat-label>
-    <input matInput>
-  </mat-form-field>
-  <mat-form-field appearance="outline" class="example-full-width">
-    <mat-label>Apellidos</mat-label>
-    <input matInput>
-  </mat-form-field >
-  <mat-form-field appearance="outline" class="example-full-width">
-    <mat-label>Correo</mat-label>
-    <input matInput>
-  </mat-form-field>
-  <mat-form-field appearance="outline" class="example-full-width">
-    <mat-label>Usuario</mat-label>
-    <input matInput>
-  </mat-form-field>
-  <mat-form-field appearance="outline" class="example-full-width">
-    <mat-label>Password</mat-label>
-    <input matInput [type]="hide ? 'password' : 'text'">
-    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-    </button>
-  </mat-form-field>
-  <mat-form-field appearance="outline" class="example-full-width">
-    <mat-label>Confirmar Password</mat-label>
-    <input matInput [type]="hide ? 'password' : 'text'">
-    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-    </button>
-  </mat-form-field>
-</form>
-</div>
-<div class="example-button-row" style="text-align: end;">
-  <button mat-raised-button color="primary">Aceptar</button>
-  <button mat-raised-button color="warn" (click)="closeModal()">Cancelar</button>
-</div>
+<p-dialog header="Autorizar Evento" [(visible)]="isVisible" styleClass="atributos" [baseZIndex]="10000"
+  [closable]="false" [modal]="true" appendTo="body">
+  <div mat-dialog-content>
+    <form class="example-form" [formGroup]="formGroupParent">
+      <div class="section">
+        <mat-form-field appearance="outline" class="example-full-width">
+          <mat-label>Nombres y Apellidos</mat-label>
+          <input matInput formControlName="nombreApellido">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Agregar Img</mat-label>
+          <ngx-mat-file-input formControlName="foto">
+            <mat-icon ngxMatFileInputIcon>folder</mat-icon>
+          </ngx-mat-file-input>
+        </mat-form-field>
+      </div>
+      <div class="section">
+        <mat-form-field appearance="outline" class="example-full-width">
+          <mat-label>Partido Politico</mat-label>
+          <input matInput formControlName="partidoPoli">
+        </mat-form-field>
+        <mat-form-field appearance="outline" >
+          <mat-label>Agregar Img</mat-label>
+          <ngx-mat-file-input formControlName="logo">
+            <mat-icon ngxMatFileInputIcon>folder</mat-icon>
+          </ngx-mat-file-input>
+        </mat-form-field>
+      </div>
+    </form>
+
+      <div  *ngFor="let nitem of formGroupParent.get('regidores')['controls']; let nindex = index;">
+        <div  style="margin-top: -19px; margin-left: 34%; " [align]="'center'">
+          <button mat-icon-button *ngIf="nindex>0" (click)="eliminarR(nindex)">Eliminar <mat-icon color="primary">delete</mat-icon>
+          </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <button mat-icon-button (click)="agregarRegidor()">&nbsp;&nbsp;&nbsp;&nbsp; Agregar Regidor <mat-icon color="primary">
+              add</mat-icon></button>
+
+        </div>
+        <div >
+        <ng-container [formGroup]="nitem">
+        <mat-form-field appearance="outline" style="width: 100%;  margin: -8px;">
+          <mat-label>Nombres y Apellidos</mat-label>
+          <input matInput [formControlName]="'nombreApellidoRegidor'">
+        </mat-form-field>
+        <mat-form-field appearance="outline" style="width: 100%;  margin: -10px;">
+          <mat-label>Cargo</mat-label>
+          <input matInput [formControlName]="'cargo'">
+        </mat-form-field>
+        </ng-container>
+      </div>
+    </div>
+
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="example-button-row" style="text-align: end; margin-bottom: -10px;">
+      <button mat-raised-button color="primary" (click)="registrarCandidato()">Aceptar</button>
+      <button mat-raised-button color="warn" (click)="closeModal()">Cancelar</button>
+    </div>
+</ng-template>
+
 </p-dialog>

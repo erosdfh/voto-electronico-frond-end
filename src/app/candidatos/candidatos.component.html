@@ -2,7 +2,7 @@
 <h1>Lista de Candidatos</h1>
 <p>Aqui se muestra toda la lista de los candidatos activos</p>
 <div style="text-align: end;">
-  <button pButton type="button" class="p-button-info" (click)="openDialog('Nuevo Usuario')">Nuevo</button>
+  <button pButton type="button" class="p-button-info" (click)="openDialog(listaCandidatos, 'Nuevo')">Nuevo</button>
 </div>
 <p-table #dt1 [value]="listaCandidatos.items" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
 	[rowsPerPageOptions]="[10,25,50]" styleClass="p-datatable-customers p-datatable-gridlines"
@@ -78,8 +78,8 @@
         <span [class]="'customer-badge status-' + topSelling.status" style="content: center;">{{topSelling.regidor.length}}</span>
 			</td>
 			<td class="sizes">
-        <button pButton pRipple type="button" icon="pi pi-pencil" styleClass="p-button-sm" class="p-button-rounded p-button-text" (click)="openDialog('Editar Candidato')"></button>
-        <button pButton pRipple type="button" icon="pi pi-eye" styleClass="p-button-sm" class="p-button-rounded p-button-secondary p-button-text" (click)="openDialog('Ver Candidato')"></button>
+        <button pButton pRipple type="button" icon="pi pi-pencil" styleClass="p-button-sm" class="p-button-rounded p-button-text" (click)="openDialog(topSelling,'Editar')"></button>
+        <button pButton pRipple type="button" icon="pi pi-eye" styleClass="p-button-sm" class="p-button-rounded p-button-secondary p-button-text" (click)="openDialog(topSelling, 'Ver')"></button>
         <button pButton pRipple type="button" icon="pi pi-trash"styleClass="p-button-sm"  class="p-button-rounded p-button-success p-button-text"></button>
 			</td>
 		</tr>
@@ -95,5 +95,5 @@
 <app-modalCandidatos
 *ngIf="verModalCandidato"
 (showModal)="abrirModalCandidato($event)"
-[dataItem]="listaCandidatos">
+[dataItems]="listaCandidatos">
 </app-modalCandidatos>
