@@ -72,7 +72,7 @@
 				<span class="image-text">{{topSelling.partidoPolitico}}</span>
 			</td>
 			<td>
-
+        {{topSelling.observacion}}
 			</td>
 			<td>
         <span [class]="'customer-badge status-' + topSelling.status" style="content: center;">{{topSelling.regidor.length}}</span>
@@ -95,5 +95,5 @@
 <app-modalCandidatos
 *ngIf="verModalCandidato"
 (showModal)="abrirModalCandidato($event)"
-[dataItems]="listaCandidatos">
+[dataItems]="listaCandidatoEdit">
 </app-modalCandidatos>

@@ -24,6 +24,7 @@ activityValues: number[] = [0, 100];
 verModalCandidato: boolean = false;
 listaCandidatos: any = [];
 buscarCandidato: string = '';
+listaCandidatoEdit: any = [];
 getPageSymbol(current: number) {
 return ['A', 'B', 'C', 'D', 'E', 'F', 'G'][current - 1];
 }
@@ -56,12 +57,20 @@ return ['A', 'B', 'C', 'D', 'E', 'F', 'G'][current - 1];
     )
   }
   openDialog(e:string, editar:any): void {
-    this.listaCandidatos = {e, titulo:editar};
+    this.listaCandidatoEdit = {e, titulo:editar};
+    console.log("111",this.listaCandidatoEdit);
     this.verModalCandidato = true;
+    console.log(e);
 }
 abrirModalCandidato(e:any){
   this.verModalCandidato = e;
-  this.listaCandidatos = [];
-  console.log(e);
+  if(e == false){
+    this.listarCandidatos();
+    //this.listaCandidatos = [];
+  }else{
+
+  }
+
+  console.log("asdsa",e);
 }
 }

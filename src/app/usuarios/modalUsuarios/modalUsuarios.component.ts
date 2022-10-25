@@ -14,6 +14,8 @@ export class ModalUsuariosComponent {
   hideConfir = true;
   formGroupParent : any = [];
   verContra : boolean = false;
+  validPass : number = 1;
+  validPassEditar: number = 1;
   @Input() dataItem: any = null;
   @Output() showModal= new EventEmitter<boolean>();
   idUsuario: number;
@@ -36,6 +38,7 @@ export class ModalUsuariosComponent {
       second_surname: new FormControl ('', [Validators.required]),
       contrasenias : this.fb.array([])
     });
+
     console.log("modal usuario", this.dataItem);
     if(this.dataItem.titulo == "Editar"){
       this.verContra = true;
@@ -52,8 +55,8 @@ export class ModalUsuariosComponent {
         first_surname: new FormControl ({value: this.dataItem.e.first_surname, disabled : true}),
         name:  new FormControl ({value: this.dataItem.e.name, disabled : true}),
         name_user:  new FormControl ({value: this.dataItem.e.name_user, disabled : true}),
-        psw: new FormControl ({value: this.dataItem.e.psw, disabled : true}),
         second_surname: new FormControl ({value: this.dataItem.e.second_surname, disabled : true}),
+        contrasenias : this.fb.array([])
       });
       this.verContra = false;
     } else if(this.dataItem.titulo == "Nuevo" ){
@@ -82,9 +85,10 @@ export class ModalUsuariosComponent {
     }
   }
   registUsuario(){
-    if(this.formGroupParent.value?.confirContrasenia == this.formGroupParent.value?.psw){
-      this.formGroupParent.controls['confirContrasenia'].setErrors(null);
-      this.formGroupParent.controls['psw'].setErrors(null);
+    let password;
+    let confPasword;
+    if(this.validPass == 0){
+      this.formGroupParent.status = 'VALID';
     }
     this.formGroupParent.markAllAsTouched();
     if(this.formGroupParent.invalid){
@@ -92,17 +96,30 @@ export class ModalUsuariosComponent {
       console.log("formgroup", this.formGroupParent);
       return;
     }
-    if(this.formGroupParent.value?.confirContrasenia != this.formGroupParent.value?.psw){
-      this.formGroupParent.controls['confirContrasenia'].setErrors({valid: false});
-      this.formGroupParent.controls['psw'].setErrors({valid: false});
-      return ;
+    (this.formGroupParent.get('contrasenias')['controls']).forEach((element:any) => {
+      confPasword = element.value?.confirContrasenia;
+      password = element.value?.psw;
+      if(password == confPasword){
+        element.controls.confirContrasenia.status = 'VALID';
+        element.controls.psw.status = 'VALID';
+        this.validPass = 1;
+      }else if(password != confPasword){
+        element.controls.psw.status = 'INVALID';
+        element.controls.confirContrasenia.status = 'INVALID';
+        this.validPass = 0;
+        return;
+      }
+    });
+    if(this.validPass == 0){
+      return;
     }
+    console.log("datos");
     let param = {
         "email": ""+this.formGroupParent.value?.email,
         "first_surname": ""+this.formGroupParent.value?.first_surname,
         "name": ""+this.formGroupParent.value?.name,
         "name_user": ""+this.formGroupParent.value?.name_user,
-        "psw": ""+this.formGroupParent.value?.psw,
+        "psw": ""+password,//""+this.formGroupParent.value?.psw,
         "second_surname": ""+this.formGroupParent.value?.second_surname
       }
       console.log(param);
@@ -115,11 +132,36 @@ export class ModalUsuariosComponent {
       });
   }
   actualizaUsuario(){
-    /*this.formGroupParent.markAllAsTouched();
+    let password = '';
+    let confPasword = '';
+    if(this.validPassEditar == 0){
+      this.formGroupParent.status = 'VALID';
+    }
+    this.formGroupParent.markAllAsTouched();
     if(this.formGroupParent.invalid){
       this.messageService.add({severity:'warn', summary: 'Advertencia', detail: 'Debe ingresar documento'});
       return;
-    }/*/
+    }
+    if((this.formGroupParent.controls.contrasenias as FormArray).length != 0){
+      console.log("aqui edita");
+      (this.formGroupParent.get('contrasenias')['controls']).forEach((element:any) => {
+        confPasword = element.value?.confirContrasenia;
+        password = element.value?.psw;
+        if(password == confPasword){
+          element.controls.confirContrasenia.status = 'VALID';
+          element.controls.psw.status = 'VALID';
+          this.validPassEditar = 1;
+        }else if(password != confPasword){
+          element.controls.psw.status = 'INVALID';
+          element.controls.confirContrasenia.status = 'INVALID';
+          this.validPassEditar = 0;
+          return;
+        }
+      });
+    }
+    if(this.validPassEditar == 0){
+      return;
+    }
     let param = {
         "email": ""+this.formGroupParent.value?.email,
         "estado": "A",
@@ -127,9 +169,10 @@ export class ModalUsuariosComponent {
         "idUsers": this.idUsuario,
         "name": ""+this.formGroupParent.value?.name,
         "name_user": ""+this.formGroupParent.value?.name_user,
-        "psw": ""+this.formGroupParent.value?.psw,
+        "psw": this.formGroupParent.value?.psw? ""+this.formGroupParent.value?.psw : '',
         "second_surname": ""+this.formGroupParent.value?.second_surname
     }
+    console.log(param);
     this.usuarioService.actualizarUsuario(param).subscribe(
       (result:any) => {
         if(result.body.status == true){

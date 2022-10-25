@@ -26,13 +26,19 @@
           </ngx-mat-file-input>
         </mat-form-field>
       </div>
+      <div >
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Observacion</mat-label>
+          <textarea matInput formControlName="observacion"></textarea>
+        </mat-form-field>
+      </div>
     </form>
 
       <div  *ngFor="let nitem of formGroupParent.get('regidores')['controls']; let nindex = index;">
         <div  style="margin-top: -19px; margin-left: 34%; " [align]="'center'">
-          <button mat-icon-button *ngIf="nindex>0" (click)="eliminarR(nindex)">Eliminar <mat-icon color="primary">delete</mat-icon>
+          <button mat-icon-button *ngIf="nindex>0" (click)="eliminarR(nindex)" [disabled]="verBotonEliminarAgregar">Eliminar <mat-icon color="primary">delete</mat-icon>
           </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <button mat-icon-button (click)="agregarRegidor()">&nbsp;&nbsp;&nbsp;&nbsp; Agregar Regidor <mat-icon color="primary">
+          <button mat-icon-button (click)="agregarRegidor()" [disabled]="verBotonEliminarAgregar">&nbsp;&nbsp;&nbsp;&nbsp; Agregar Regidor <mat-icon color="primary">
               add</mat-icon></button>
 
         </div>
@@ -53,7 +59,7 @@
   </div>
   <ng-template pTemplate="footer">
     <div class="example-button-row" style="text-align: end; margin-bottom: -10px;">
-      <button mat-raised-button color="primary" (click)="registrarCandidato()">Aceptar</button>
+      <button mat-raised-button color="primary" (click)="accion()">Aceptar</button>
       <button mat-raised-button color="warn" (click)="closeModal()">Cancelar</button>
     </div>
 </ng-template>
