@@ -29,9 +29,10 @@ export class AlumnosComponent {
   }
 
   onFileChange(evt: any) {
+    console.log("dasd",evt);
     const target : DataTransfer =  <DataTransfer>(evt.target);
-
-    if (target.files.length !== 1) throw new Error('no se puede seleccionar varios archivos');
+    console.log("file",target);
+    //if (target.files.length !== 1) throw new Error('no se puede seleccionar varios archivos');
 
     const reader: FileReader = new FileReader();
 

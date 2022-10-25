@@ -64,7 +64,8 @@ import {MatSelectModule} from '@angular/material/select';
     ModalAlumnosComponent,
     ReportesComponent,
     ReporteTotalComponent,
-
+    ModalAlumnosComponent,
+    AlumnosComponent
    ],
   imports: [
     AppRoutingModule,
