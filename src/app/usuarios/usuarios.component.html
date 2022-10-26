@@ -71,7 +71,7 @@
         <td class="sizes">
           <button pButton pRipple type="button" icon="pi pi-pencil" styleClass="p-button-sm" class="p-button-rounded p-button-text" (click)="openDialog(tr, 'Editar')"></button>
           <button pButton pRipple type="button" icon="pi pi-eye" styleClass="p-button-sm" class="p-button-rounded p-button-secondary p-button-text" (click)="openDialog(tr, 'Ver')"></button>
-          <button pButton pRipple type="button" icon="pi pi-trash"styleClass="p-button-sm"  class="p-button-rounded p-button-success p-button-text"  (click)="confirm2()"></button>
+          <button pButton pRipple type="button" icon="pi pi-trash"styleClass="p-button-sm"  class="p-button-rounded p-button-success p-button-text"  (click)="confimacionEliminarDialog(tr)"></button>
         </td>
       </tr>
     </ng-template>
@@ -82,11 +82,14 @@
     </ng-template>
   </p-table>
   </div>
-  <p-confirmDialog [style]="{width: '50vw'}" key="positionDialog"  [baseZIndex]="10000" rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
+
 <app-modalUsuarios
 *ngIf="verModalUsuario"
 (showModal)="abrirModalEditarUsuario($event)"
 [dataItem]="listeditarUsuario">
 </app-modalUsuarios>
-
 <p-toast></p-toast>
+
+<p-confirmDialog [style]="{width: '50vw'}" key="positionDialog" [baseZIndex]="10000"></p-confirmDialog>
+
+

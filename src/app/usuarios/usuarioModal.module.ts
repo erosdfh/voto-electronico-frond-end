@@ -36,8 +36,8 @@ import { AppRoutingModule } from '../app-routing.module';
 import { ModalUsuariosComponent } from './modalUsuarios/modalUsuarios.component';
 import { UsuariosComponent } from './usuarios.component';
 import {DialogModule} from 'primeng/dialog';
-
 import {ConfirmationService} from 'primeng/api';
+import { MessagesModule } from 'primeng/messages';
 
 
 @NgModule({
@@ -79,7 +79,9 @@ import {ConfirmationService} from 'primeng/api';
     MatCardModule,
     ReactiveFormsModule,
     DialogModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    MessagesModule
+
   ],
   exports: [
 

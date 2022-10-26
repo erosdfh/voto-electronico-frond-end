@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Input, Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -18,6 +19,7 @@ export class ModalCandidatosComponent {
   isVisible: boolean = true;
   resultadoGuardadoActualizado: any = [];
   verBotonEliminarAgregar:boolean = false;
+  titulo: any = [];
   @Input() dataItems: any = null;
   @Output() showModal= new EventEmitter<boolean>();
   constructor(
@@ -35,6 +37,7 @@ export class ModalCandidatosComponent {
     });
   }
   ngOnInit() {
+    this.titulo = this.dataItems.titulo;
     console.log("modal", this.dataItems);
     if(this.dataItems.titulo == 'Editar'){
       this.formGroupParent.controls.nombreApellido.setValue(this.dataItems.e.candidato);
@@ -120,6 +123,7 @@ export class ModalCandidatosComponent {
         console.log(result);
         this.closeModal();
         }
+      }, (error: HttpErrorResponse) => {
       });
   }
   accion(){
@@ -165,6 +169,7 @@ export class ModalCandidatosComponent {
             this.closeModal();
             console.log("resul", result);
           }
+        }, (error: HttpErrorResponse) => {
         });
   }
   agregarRegidor(){

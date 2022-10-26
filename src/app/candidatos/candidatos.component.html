@@ -80,7 +80,7 @@
 			<td class="sizes">
         <button pButton pRipple type="button" icon="pi pi-pencil" styleClass="p-button-sm" class="p-button-rounded p-button-text" (click)="openDialog(topSelling,'Editar')"></button>
         <button pButton pRipple type="button" icon="pi pi-eye" styleClass="p-button-sm" class="p-button-rounded p-button-secondary p-button-text" (click)="openDialog(topSelling, 'Ver')"></button>
-        <button pButton pRipple type="button" icon="pi pi-trash"styleClass="p-button-sm"  class="p-button-rounded p-button-success p-button-text"></button>
+        <button pButton pRipple type="button" icon="pi pi-trash"styleClass="p-button-sm"  class="p-button-rounded p-button-success p-button-text" (click)="confimacionEliminarDialog(topSelling)"></button>
 			</td>
 		</tr>
 	</ng-template>
@@ -97,3 +97,5 @@
 (showModal)="abrirModalCandidato($event)"
 [dataItems]="listaCandidatoEdit">
 </app-modalCandidatos>
+<p-confirmDialog [style]="{width: '50vw'}" key="positionDialog" [baseZIndex]="10000"></p-confirmDialog>
+<p-toast></p-toast>

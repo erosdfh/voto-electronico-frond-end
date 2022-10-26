@@ -1,5 +1,7 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { UsuarioService } from '../services/usuario.service';
 import {Product,TopSelling, TableRows, Employee} from './candidatos-data';
 import { ModalCandidatosComponent } from './modalCandidatos/modalCandidatos.component';
@@ -25,12 +27,15 @@ verModalCandidato: boolean = false;
 listaCandidatos: any = [];
 buscarCandidato: string = '';
 listaCandidatoEdit: any = [];
+msgs:any = [];
 getPageSymbol(current: number) {
 return ['A', 'B', 'C', 'D', 'E', 'F', 'G'][current - 1];
 }
   constructor(
     public dialog: MatDialog,
-    private usuarioService:UsuarioService
+    private usuarioService:UsuarioService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
     ) {
     this.topSelling=TopSelling;
     this.trow=Employee;
@@ -51,10 +56,15 @@ return ['A', 'B', 'C', 'D', 'E', 'F', 'G'][current - 1];
     console.log(param);
     this.usuarioService.listarCandidato(param).subscribe(
       (result:any)=>{
-        this.listaCandidatos = result
+        if(result.items.length != 0){
+          this.listaCandidatos = result
+        }else{
+          this.messageService.add({severity:'warn', summary: 'Advertencia', detail: 'No existe registros para mostrar'});
+        }
         console.log(result);
-      }
-    )
+      },(error: HttpErrorResponse) => {
+        this.messageService.add({severity:'error', summary: 'Error', detail: 'Verificar su conexion y vuelve a intentarlo'});
+      })
   }
   openDialog(e:string, editar:any): void {
     this.listaCandidatoEdit = {e, titulo:editar};
@@ -68,9 +78,38 @@ abrirModalCandidato(e:any){
     this.listarCandidatos();
     //this.listaCandidatos = [];
   }else{
-
   }
 
-  console.log("asdsa",e);
+}
+confimacionEliminarDialog(e:any) {
+  this.confirmationService.confirm({
+      message: '¿Esta seguro de eliminar el registro?',
+      header: 'Confirmación Eliminar ',
+      icon: 'pi pi-info-circle',
+      acceptLabel: 'Si',
+      rejectLabel: 'No',
+      accept: () => {
+        this.eliminar(e);
+          this.msgs = [{severity:'info', summary:'Confirmed', detail:'Record deleted'}];
+      },
+      reject: () => {
+          this.msgs = [{severity:'info', summary:'Rejected', detail:'You have rejected'}];
+      },
+      key: "positionDialog"
+  });
+}
+eliminar(e:any){
+  console.log(e);
+this.usuarioService.eliminarCandidato(e.idCandidato).subscribe(
+  (result:any)=>{
+    if(result.body.status == true){
+      this.messageService.add({severity:'success', summary: 'Confirmado', detail: 'El registro de elimino de forma correcta'});
+      this.listarCandidatos();
+    }
+  }, (error: HttpErrorResponse) => {
+    this.messageService.add({severity:'error', summary: 'Error', detail: 'Verificar su conexion y vuelve a intentarlo'});
+  });
+
+
 }
 }

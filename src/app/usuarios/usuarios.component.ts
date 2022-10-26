@@ -6,7 +6,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import { ModalUsuariosComponent } from './modalUsuarios/modalUsuarios.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UsuarioService } from '../services/usuario.service';
-import { ConfirmationService, MessageService,ConfirmEventType } from 'primeng/api';
+import { ConfirmationService, MessageService,ConfirmEventType, PrimeNGConfig } from 'primeng/api';
 
 @Component({
   selector: 'app-usuarios',
@@ -28,10 +28,12 @@ export class UsuariosComponent implements OnInit {
   trow:TableRows[];
   listeditarUsuario: any = [];
   verModalUsuario: boolean = false;
+  msgs:any = [];
   constructor(
     public dialog: MatDialog, private usuarioService:UsuarioService,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private primengConfig: PrimeNGConfig
     ) {
     this.trow=Employee;
   }
@@ -40,6 +42,7 @@ export class UsuariosComponent implements OnInit {
 
   ngOnInit(): void {
     this.listarUsuario();
+    this.primengConfig.ripple = true;
   }
   abrirModalEditarUsuario(e:any){
     this.verModalUsuario = e;
@@ -62,31 +65,45 @@ listarUsuario(){
   let param = +(this.idUsuario ? +this.idUsuario : "")
   this.usuarioService.listarUsuario(param).subscribe(
     (result: any) => {
-      this.lista = result.items;
-    }, (error: HttpErrorResponse) => {
+      if(result.items.length != 0){
+        this.lista = result.items;
+      }else{
+        this.messageService.add({severity:'warn', summary: 'Advertencia', detail: 'No existe registros para mostrar'});
+      }
+    },(error: HttpErrorResponse) => {
+      this.messageService.add({severity:'error', summary: 'Error', detail: 'Verificar su conexion y vuelve a intentarlo'});
     });
   }
-  confirm2() {
-    console.log("eliminar");
-    this.confirmationService.confirm({
-        message: 'Do you want to delete this record?',
-        header: 'Delete Confirmation',
-        icon: 'pi pi-info-circle',
-        accept: () => {
-            this.messageService.add({severity:'info', summary:'Confirmed', detail:'Record deleted'});
-        },
-        reject: (type:any) => {
-            switch(type) {
-                case ConfirmEventType.REJECT:
-                    this.messageService.add({severity:'error', summary:'Rejected', detail:'You have rejected'});
-                break;
-                case ConfirmEventType.CANCEL:
-                    this.messageService.add({severity:'warn', summary:'Cancelled', detail:'You have cancelled'});
-                break;
-            }
-        }
-    });
-}
+  confimacionEliminarDialog(e:any) {
+        this.confirmationService.confirm({
+            message: '¿Esta seguro de eliminar el registro?',
+            header: 'Confirmación Eliminar ',
+            icon: 'pi pi-info-circle',
+            acceptLabel: 'Si',
+            rejectLabel: 'No',
+            accept: () => {
+              this.eliminar(e);
+                this.msgs = [{severity:'info', summary:'Confirmed', detail:'Record deleted'}];
+            },
+            reject: () => {
+                this.msgs = [{severity:'info', summary:'Rejected', detail:'You have rejected'}];
+            },
+            key: "positionDialog"
+        });
+    }
+    eliminar(e:any){
+      this.usuarioService.elimarUsuario(e.idUsers).subscribe(
+        (result:any)=>{
+          if(result.body.status == true){
+            this.messageService.add({severity:'success', summary: 'Confirmado', detail: 'El registro de elimino de forma correcta'});
+            this.listarUsuario();
+          }
+        }, (error: HttpErrorResponse) => {
+          this.messageService.add({severity:'error', summary: 'Error', detail: 'Verificar su conexion y vuelve a intentarlo'});
+        });
+
+
+    }
 }
 export interface IAlert {
   id: number;

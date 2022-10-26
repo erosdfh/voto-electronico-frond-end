@@ -2,16 +2,27 @@
 <div class="card" style="margin: 3%;">
   <h1>Lista de Alumnos</h1>
   <div style="text-align: end;">
-    <mat-form-field style="margin-bottom: -16px;">
+    <button pButton type="button" class="p-button-info" (click)="openDialog(listaAlumno, 'Nuevo')" >Nuevo</button>
+    <!--div class="container-input">
+      <input type="file" name="file-1" id="file-1" class="inputfile inputfile-1" [(ngModel)]="nameFile" (change)="onFileChange($event)"/>
+      <label for="file-1">
+      <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
+      <span *ngIf="nameFile.length == 0" class="iborrainputfile">Seleccionar archivo</span>
+      <span *ngIf="nameFile.length > 0" class="iborrainputfile">{{nameFile.substring(12,100)}}</span>
+      </label>
+
+
+      </!--div-->
+    <!--mat-form-field style="margin-bottom: -16px;">
       <mat-label >Carga Masiva</mat-label>
       <input type="file" (change)="onFileChange($event)"/>
-      <!--ngx-mat-file-input (change)="onFileChange($event)">
+      <ngx-mat-file-input (change)="onFileChange($event)">
         <mat-icon ngxMatFileInputIcon>folder</mat-icon>
-      </ngx-mat-file-input-->
-    </mat-form-field>
-    <!--button pButton type="button" class="p-button-info" (click)="openDialogAlumno(listaAlumno, 'Nuevo Alumno')">Nuevo</button-->
+      </ngx-mat-file-input>
+    </mat-form-field-->
+    <!--button-- pButton type="button" class="p-button-info" (click)="openDialogAlumno(listaAlumno, 'Nuevo Alumno')">Nuevo</!--button-->
   </div>
-  <p-table #dt1 [value]="trow" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
+  <p-table #dt1 [value]="listAlumno.items" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
     [rowsPerPageOptions]="[10,25,50]" styleClass="p-datatable-customers p-datatable-gridlines"
     [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     [globalFilterFields]="['name','country.name','representative.name','status']">
@@ -28,27 +39,22 @@
       <tr>
         <th>
           <div class="p-d-flex p-jc-between p-ai-center">
-            Candidato
+            Apellidos y Nombres
           </div>
         </th>
         <th>
           <div class="p-d-flex p-jc-between p-ai-center">
-            Partido Politico
+            DNI
           </div>
         </th>
         <th>
           <div class="p-d-flex p-jc-between p-ai-center">
-            Estado
+            Grado
           </div>
         </th>
         <th>
           <div class="p-d-flex p-jc-between p-ai-center">
-            Observaciones
-          </div>
-        </th>
-        <th>
-          <div class="p-d-flex p-jc-between p-ai-center">
-            Cant. Integrantes
+            Sección
           </div>
         </th>
         <th style="width: 10rem">
@@ -61,24 +67,20 @@
     <ng-template pTemplate="body" let-tr>
       <tr>
         <td>
-          {{tr.uname}}
+          {{tr.nombresApellidos}}
         </td>
         <td>
-          <img [alt]="tr.productName" src="assets/images/candidato1.png" width="32" style="vertical-align: middle;" />
-          <span class="image-text">{{tr.uname}}</span>
+          <span class="image-text">{{tr.dni}}</span>
         </td>
         <td>
-          <span class="image-text">{{tr.uname}}</span>
+          <span class="image-text">{{tr.grado}}</span>
         </td>
         <td>
-
-        </td>
-        <td>
-          <span [class]="'customer-badge status-' + tr.status">{{tr.uname}}</span>
+          <span [class]="'customer-badge status-' + tr.status">{{tr.seccion}}</span>
         </td>
         <td class="sizes">
-          <button pButton pRipple type="button" icon="pi pi-pencil" styleClass="p-button-sm" class="p-button-rounded p-button-text" (click)="openDialogAlumno(tr)"></button>
-          <button pButton pRipple type="button" icon="pi pi-eye" styleClass="p-button-sm" class="p-button-rounded p-button-secondary p-button-text" (click)="openDialogAlumno(tr)"></button>
+          <button pButton pRipple type="button" icon="pi pi-pencil" styleClass="p-button-sm" class="p-button-rounded p-button-text" (click)="openDialog(tr,'')"></button>
+          <button pButton pRipple type="button" icon="pi pi-eye" styleClass="p-button-sm" class="p-button-rounded p-button-secondary p-button-text" (click)="openDialog(tr,'')"></button>
           <button pButton pRipple type="button" icon="pi pi-trash"styleClass="p-button-sm"  class="p-button-rounded p-button-success p-button-text"></button>
         </td>
       </tr>
@@ -91,8 +93,9 @@
   </p-table>
   </div>
 
-  <!--app-modalAlumnos
+  <app-modalAlumnos
   *ngIf="verModalAlumno"
   (showModal)="abrirModalCandidato($event)"
   [dataItems1]="listaAlumno">
-  </app-modalAlumnos-->
+  </app-modalAlumnos>
+  <p-toast></p-toast>

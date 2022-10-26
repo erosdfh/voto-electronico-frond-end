@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Input, Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
@@ -16,6 +17,7 @@ export class ModalUsuariosComponent {
   verContra : boolean = false;
   validPass : number = 1;
   validPassEditar: number = 1;
+  titulo: any = [];
   @Input() dataItem: any = null;
   @Output() showModal= new EventEmitter<boolean>();
   idUsuario: number;
@@ -30,6 +32,7 @@ export class ModalUsuariosComponent {
 
 
   ngOnInit(){
+    this.titulo = this.dataItem.titulo;
     this.formGroupParent = this.fb.group({
       email: new FormControl ('', [Validators.required, Validators.email]),
       first_surname: new FormControl ('', [Validators.required]),
@@ -129,6 +132,8 @@ export class ModalUsuariosComponent {
           this.closeModal();
           console.log("resultActu",result);
         }
+      }, (error: HttpErrorResponse) => {
+
       });
   }
   actualizaUsuario(){
@@ -180,6 +185,7 @@ export class ModalUsuariosComponent {
           console.log("resultActu",result);
         }
 
+      }, (error: HttpErrorResponse) => {
       });
   }
 

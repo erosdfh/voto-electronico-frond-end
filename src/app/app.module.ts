@@ -105,10 +105,11 @@ import {MatSelectModule} from '@angular/material/select';
     UsuarioModalModule,
     DialogModule,
     NgxMatFileInputModule,
-    MatSelectModule
+    MatSelectModule,
+    ConfirmDialogModule
   ],
 
-  providers: [MessageService ],
+  providers: [MessageService, ConfirmationService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

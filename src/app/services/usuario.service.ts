@@ -38,4 +38,22 @@ registrarCandidato(param:any){
 actualizarCandidato(param:any){
   return this.http.post(`${this.base}candidato/actualizarCandidato`, param);
 }
+elimarUsuario(idUsuarioEliminar : number){
+  return this.http.get(this.base +'usuario/eliminarusuario?id=' + idUsuarioEliminar);
+}
+
+eliminarCandidato(idCandidato: number){
+  return this.http.get(this.base + 'candidato/eliminarCandidato?id='+idCandidato);
+}
+listarAlumnos(idAlumno:number){
+  return this.http.get(this.base + 'alumno/listarAlumno?id=' + idAlumno);
+}
+//http://localhost:8094/alumno/registrarAlumno
+registrarAlumno(param:any){
+  console.log("1111",param);
+  return this.http.post( `${this.base}alumno/registrarAlumno`,param);
+}
+actualizarAlumno(param:any){
+  return this.http.post(`${this.base}alumno/actualizarAlumno`, param);
+}
 }
