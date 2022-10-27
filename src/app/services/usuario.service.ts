@@ -56,4 +56,7 @@ registrarAlumno(param:any){
 actualizarAlumno(param:any){
   return this.http.post(`${this.base}alumno/actualizarAlumno`, param);
 }
+eliminarAlumno(idAlumno: number){
+  return this.http.get(this.base + 'alumno/eliminarAlumno?id=' + idAlumno);
+}
 }

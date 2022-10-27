@@ -50,3 +50,6 @@ font-family: 'Lato';
 .inputfile-1 + label:hover {
   background-color: #283baa;
 }
+::ng-deep .cdk-overlay-container {
+  z-index: 9999 !important;
+}
