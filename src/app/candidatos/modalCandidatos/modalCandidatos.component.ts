@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Input, Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { DomSanitizer } from '@angular/platform-browser';
 import { MessageService } from 'primeng/api';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { ModalCandidatos } from '../candidatos-data';
@@ -20,12 +21,16 @@ export class ModalCandidatosComponent {
   resultadoGuardadoActualizado: any = [];
   verBotonEliminarAgregar:boolean = false;
   titulo: any = [];
+  archivos: any = [];
+  previsualizacion: String;
+
   @Input() dataItems: any = null;
   @Output() showModal= new EventEmitter<boolean>();
   constructor(
     private fb:FormBuilder,
     private usuarioService: UsuarioService,
     private messageService: MessageService,
+    private sanitezer: DomSanitizer
   ) {
     this.formGroupParent = this.fb.group({
       nombreApellido: new FormControl('', [ Validators.required]),
@@ -86,6 +91,53 @@ export class ModalCandidatosComponent {
       });
     }
   }
+
+   /*capturarImagens(event:any) {
+    let asss : any = '';
+    let me = this;
+    let file = event.target.files[0];
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    console.log("aqui",reader);
+    reader.onload = function () {
+      //me.modelvalue = reader.result;
+      console.log("asd",reader.result);
+      asss = reader.result
+    };
+    reader.onerror = function (error) {
+      console.log('Error: ', error);
+    };
+    this.archivos = asss
+    console.log("1225555",this.archivos);
+ }*/
+
+ capturarImagen(event:any){
+    let archivoCapturado = event.target.files[0];
+    this.archivos.push(archivoCapturado);
+    this.extraerbase64(archivoCapturado).then((imagen:any) =>{
+      this.previsualizacion= imagen.base;
+      console.log("dsad",imagen);
+    });
+    //console.log("foto",event.target.files);
+  }
+  extraerbase64 = async ($event: any) => new Promise ((resolve, reject) =>{
+      const unsafeImg = window.URL.createObjectURL($event);
+      const image = this.sanitezer.bypassSecurityTrustUrl(unsafeImg);
+      const reader = new FileReader;
+      reader.readAsDataURL($event);
+      reader.onload = () =>{
+        resolve({
+          base: reader.result
+        })
+      }
+  })
+
+  guardarIMgPrueba(){
+    console.log(this.formGroupParent.value?.foto)
+  }
+
+
+
   closeModal(){
     this.isVisible = false;
     console.log(this.resultadoGuardadoActualizado);

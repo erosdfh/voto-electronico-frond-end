@@ -50,6 +50,7 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
 import {NgxMatFileInputModule} from '@angular-material-components/file-input';
 import {MatSelectModule} from '@angular/material/select';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [
@@ -106,7 +107,9 @@ import {MatSelectModule} from '@angular/material/select';
     DialogModule,
     NgxMatFileInputModule,
     MatSelectModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    NgxSpinnerModule,
+
   ],
 
   providers: [MessageService, ConfirmationService ],

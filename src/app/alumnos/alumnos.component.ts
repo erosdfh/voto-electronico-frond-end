@@ -7,6 +7,7 @@ import { UsuarioService } from "../services/usuario.service";
 import { ConfirmationService, MessageService } from "primeng/api";
 import { HttpErrorResponse } from "@angular/common/http";
 import { RowGroupHeader } from "primeng/table";
+import { NgxSpinnerService } from "ngx-spinner";
 @Component({
   templateUrl: "alumnos.component.html",
   styleUrls: ['./alumnos.component.scss']
@@ -25,12 +26,15 @@ export class AlumnosComponent {
     private usuarioService:UsuarioService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
+    private spinner: NgxSpinnerService
+
   ) {
     this.trow=Employee;
   }
 
   ngOnInit() {
     this.listaralumno();
+
   }
 
   openDialog(e:string, editar:any): void {
@@ -57,8 +61,10 @@ abrirModalCandidato(e:any){
 }
   listaralumno(){
     let param : number = 0;
+    this.spinner.show();
     this.usuarioService.listarAlumnos(param).subscribe(
       (result:any)=>{
+        this.spinner.hide();
         if(result.items.length != 0){
           this.listAlumno = result
         }else{
