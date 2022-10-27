@@ -14,14 +14,14 @@
         <span *ngIf="nameFile.length > 0" class="iborrainputfile">{{nameFile.substring(12,100)}}</span>
       </label>
     </div>
+    <br>
     <div align="center">
-      <mat-form-field appearance="outline" >
-        <mat-label>Seleccione</mat-label>
-        <mat-select [(ngModel)]="capIdCombo">
-          <mat-option *ngFor="let element of comboList" [value]="element.id">
-            {{element.message}}
-          </mat-option>
-        </mat-select>
+      <mat-form-field appearance="outline">
+        <mat-label>Nivel</mat-label>
+        <select [(ngModel)]="selected"  matNativeControl required>
+          <option value="1">Primaria</option>
+          <option value="2">Secundaria</option>
+        </select>
       </mat-form-field>
     </div>
   </div>

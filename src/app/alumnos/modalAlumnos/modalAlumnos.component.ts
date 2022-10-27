@@ -18,6 +18,7 @@ export class ModalAlumnosComponent implements OnInit {
   titulo:string='';
   capIdCombo : any = []
   comboList: any = [];
+  selected: any =0;
   @Input() dataItems1: any = null;
   @Output() showModal= new EventEmitter<Boolean>();
 
@@ -90,7 +91,7 @@ export class ModalAlumnosComponent implements OnInit {
                     "nombresApellidos":''+element.__EMPTY,
                     "grado":''+element.__EMPTY_2,
                     "seccion":''+element.__EMPTY_3,
-                    "idNivel":1
+                    "idNivel":this.selected
                   })
                   //dataFor.push(element);
                 }
