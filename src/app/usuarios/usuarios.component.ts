@@ -6,7 +6,6 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import { ModalUsuariosComponent } from './modalUsuarios/modalUsuarios.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UsuarioService } from '../services/usuario.service';
-import { NgxSpinnerService } from "ngx-spinner";
 import { ConfirmationService, MessageService,ConfirmEventType, PrimeNGConfig } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
 

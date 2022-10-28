@@ -49,6 +49,7 @@ import {ConfirmationService} from 'primeng/api';
 import {NgxMatFileInputModule} from '@angular-material-components/file-input';
 import {MatSelectModule} from '@angular/material/select';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { EleccionAlumnoComponent } from './eleccionAlumno/eleccionAlumno.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { NgxSpinnerModule } from "ngx-spinner";
     ReportesComponent,
     ReporteTotalComponent,
     ModalAlumnosComponent,
-    AlumnosComponent
+    AlumnosComponent,
+    EleccionAlumnoComponent
    ],
   imports: [
     AppRoutingModule,

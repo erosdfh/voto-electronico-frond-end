@@ -11,6 +11,7 @@ import { AboutComponent } from './about/about.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { CandidatosComponent } from './candidatos/candidatos.component';
 import { ReporteTotalComponent } from './reporteTotal/reporteTotal.component';
+import { EleccionAlumnoComponent } from './eleccionAlumno/eleccionAlumno.component';
 const routes: Routes = [
   {
     path: '',
@@ -67,6 +68,12 @@ const routes: Routes = [
         {
           path: 'ReporteTotal',
           component: ReporteTotalComponent,
+          data: {
+          title: 'Login Page'
+        }},
+         {
+          path: 'eleccionAlumno',
+          component: EleccionAlumnoComponent,
           data: {
           title: 'Login Page'
         }}
