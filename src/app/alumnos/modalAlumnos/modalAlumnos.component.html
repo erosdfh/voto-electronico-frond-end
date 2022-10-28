@@ -1,8 +1,9 @@
 <p-dialog header="{{titulo}} Alumno" [(visible)]="isVisible" styleClass="atributos" [baseZIndex]="10000"
   [closable]="false" [modal]="true" appendTo="body">
   <div mat-dialog-content *ngIf="!cargarExcel">
-    <div class="container-input" style="text-align: center;">
-      <input type="file" name="file-1" id="file-1" class="inputfile inputfile-1" [(ngModel)]="nameFile"
+    <form [formGroup]="formGroupParent1">
+    <div class="container-input" style="text-align: center; margin-top: 20px;">
+      <input type="file" name="file-1" id="file-1" class="inputfile inputfile-1" formControlName="cargaM"
         (change)="onFileChange($event)" />
       <label for="file-1">
         <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile" width="20" height="17" viewBox="0 0 20 17">
@@ -10,60 +11,52 @@
             d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
           </path>
         </svg>
-        <span *ngIf="nameFile.length == 0" class="iborrainputfile">Seleccionar archivo</span>
-        <span *ngIf="nameFile.length > 0" class="iborrainputfile">{{nameFile.substring(12,100)}}</span>
+        <span *ngIf="this.formGroupParent1.value?.cargaM.length == 0" class="iborrainputfile">Seleccionar archivo</span>
+        <span *ngIf="this.formGroupParent1.value?.cargaM.length > 0" class="iborrainputfile">{{this.formGroupParent1.value?.cargaM.substring(12,100)}}</span>
       </label>
     </div>
     <br>
-    <div align="center">
+    <div align="center" style="margin-bottom: -30px;">
       <mat-form-field appearance="outline">
         <mat-label>Nivel</mat-label>
-        <select [(ngModel)]="selected"  matNativeControl required>
-          <option value="1">Primaria</option>
-          <option value="2">Secundaria</option>
-        </select>
+        <mat-select formControlName="nivel">
+          <mat-option *ngFor="let element of nivel" [value]="element.idN">{{element.mss}}</mat-option>
+        </mat-select>
       </mat-form-field>
     </div>
+  </form>
   </div>
 <div mat-dialog-content *ngIf="cargarExcel">
-  <form class="example-form">
+  <form class="example-form" [formGroup]="formGropuParent">
   <mat-form-field appearance="outline" class="example-full-width">
-    <mat-label>Nombres</mat-label>
-    <input matInput>
+    <mat-label>Pallidos y Nombres</mat-label>
+    <input matInput formControlName="ApNombres">
   </mat-form-field>
   <mat-form-field appearance="outline" class="example-full-width">
-    <mat-label>Apellidos</mat-label>
-    <input matInput>
+    <mat-label>DNI</mat-label>
+    <input matInput formControlName="dni">
   </mat-form-field >
   <mat-form-field appearance="outline" class="example-full-width">
-    <mat-label>Correo</mat-label>
-    <input matInput>
+    <mat-label>Nivel</mat-label>
+    <mat-select [formControlName]="'nivel'" >
+      <mat-option *ngFor="let element of nivel" [value]="element.idN">{{element.mss}}</mat-option>
+    </mat-select>
   </mat-form-field>
   <mat-form-field appearance="outline" class="example-full-width">
-    <mat-label>Usuario</mat-label>
-    <input matInput>
+    <mat-label>Grado</mat-label>
+    <input matInput formControlName="grado">
   </mat-form-field>
-  <mat-form-field appearance="outline" class="example-full-width">
-    <mat-label>Password</mat-label>
-    <input matInput [type]="hide ? 'password' : 'text'">
-    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-    </button>
-  </mat-form-field>
-  <mat-form-field appearance="outline" class="example-full-width">
-    <mat-label>Confirmar Password</mat-label>
-    <input matInput [type]="hide ? 'password' : 'text'">
-    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-    </button>
+  <mat-form-field appearance="outline" class="example-full-width" style="margin-bottom: -20px;">
+    <mat-label>Sección</mat-label>
+    <input matInput formControlName="seccion">
   </mat-form-field>
 </form>
 </div>
 <ng-template pTemplate="footer">
   <div class="example-button-row" style="text-align: end;">
-    <button mat-raised-button color="primary" (click)="Upload()">Aceptar</button>
+    <button mat-raised-button color="primary" (click)="accion()">Aceptar</button>
     <button mat-raised-button color="warn" (click)="closeModal()">Cancelar</button>
   </div>
 </ng-template>
-
 </p-dialog>
+

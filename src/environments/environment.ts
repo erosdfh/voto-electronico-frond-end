@@ -4,7 +4,11 @@
 
 export const environment = {
   production: false,
+<<<<<<< HEAD
   baseUrl:'http://localhost:8094/',
+=======
+  baseUrl:'http://bec6-179-6-101-64.ngrok.io/',
+>>>>>>> bde126d14131a121f25906a0395fae258d15cb45
 };
 
 /*

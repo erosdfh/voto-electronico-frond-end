@@ -4,7 +4,7 @@ import { Employee, TableRows } from "./alumnos-data";
 import { ModalAlumnosComponent } from "./modalAlumnos/modalAlumnos.component";
 
 import { UsuarioService } from "../services/usuario.service";
-import { MessageService } from "primeng/api";
+import { ConfirmationService, MessageService } from "primeng/api";
 import { HttpErrorResponse } from "@angular/common/http";
 import { RowGroupHeader } from "primeng/table";
 import { NgxSpinnerService } from "ngx-spinner";
@@ -20,10 +20,12 @@ export class AlumnosComponent {
   listAlumno: any = [];
   verModalAlumno: boolean = false;
   listaAlumno:any = [];
+  msgs:any = [];
   constructor(
     private dialog: MatDialog,
     private usuarioService:UsuarioService,
     private messageService: MessageService,
+    private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService
   ) {
     this.trow=Employee;
@@ -31,21 +33,30 @@ export class AlumnosComponent {
 
   ngOnInit() {
     this.listaralumno();
+
   }
 
   openDialog(e:string, editar:any): void {
     this.listaAlumno = {e, titulo:editar};
     console.log("111",this.listaAlumno);
     this.verModalAlumno = true;
-    console.log(e);
+    console.log("ee",e);
   }
 abrirModalCandidato(e:any){
-  this.verModalAlumno = e;
+  console.log("5555",e);
   if(e == false){
-    //this.listarCandidatos();
-    //this.listaCandidatos = [];
-  }else{
+    this.verModalAlumno = false;
+  }else if(e.listRes.body.status == true){
+    if(e.titulo == 'E'){
+      this.messageService.add({severity:'success', summary: 'Confirmado', detail: 'Se actualizó de forma correcta'});
+    }else if(e.titulo == 'N'){
+      this.messageService.add({severity:'success', summary: 'Confirmado', detail: 'Se registro de forma correcta'});
+    }
+    this.verModalAlumno = false;
+  }else if (e.listRes.body.status == false){
+    this.verModalAlumno = false;
   }
+  //this.verModalAlumno = e;
 }
   listaralumno(){
     let param : number = 0;
@@ -64,6 +75,34 @@ abrirModalCandidato(e:any){
       });
   }
 
+  confimacionEliminarDialog(e:any) {
+    this.confirmationService.confirm({
+        message: '¿Esta seguro de eliminar el registro?',
+        header: 'Confirmación Eliminar ',
+        icon: 'pi pi-info-circle',
+        acceptLabel: 'Si',
+        rejectLabel: 'No',
+        accept: () => {
+          this.eliminarAlumno(e);
+            this.msgs = [{severity:'info', summary:'Confirmed', detail:'Record deleted'}];
+        },
+        reject: () => {
+            this.msgs = [{severity:'info', summary:'Rejected', detail:'You have rejected'}];
+        },
+        key: "positionDialog"
+    });
+  }
+  eliminarAlumno(e:any){
+    this.usuarioService.eliminarAlumno(e.idalumno).subscribe(
+      (result:any)=>{
+        if(result.body.status == true){
+          this.messageService.add({severity:'success', summary: 'Confirmado', detail: 'Se elimino de forma correcta'});
+          this.listaralumno();
+        }
+      }, (error: HttpErrorResponse) => {
+        this.messageService.add({severity:'error', summary: 'Error', detail: 'Verificar su conexion y vuelve a intentarlo'});
+      });
+  }
   /*onFileChange(evt: any) {
     console.log("Evento",evt);
     const target : DataTransfer =  <DataTransfer>(evt.target);

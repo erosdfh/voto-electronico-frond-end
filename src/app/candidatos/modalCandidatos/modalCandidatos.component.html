@@ -7,12 +7,17 @@
           <mat-label>Nombres y Apellidos</mat-label>
           <input matInput formControlName="nombreApellido">
         </mat-form-field>
+        <input type="file" (change)="capturarImagen($event)">
         <mat-form-field appearance="outline">
           <mat-label>Agregar Img</mat-label>
-          <ngx-mat-file-input formControlName="foto">
+          <ngx-mat-file-input formControlName="foto" >
             <mat-icon ngxMatFileInputIcon>folder</mat-icon>
           </ngx-mat-file-input>
         </mat-form-field>
+      </div>
+      <div>
+        <img [src]="previsualizacion" alt="">
+        drftgyhujftgyhuj
       </div>
       <div class="section">
         <mat-form-field appearance="outline" class="example-full-width">
@@ -59,7 +64,7 @@
   </div>
   <ng-template pTemplate="footer">
     <div class="example-button-row" style="text-align: end; margin-bottom: -10px;">
-      <button mat-raised-button color="primary" (click)="accion()">Aceptar</button>
+      <button mat-raised-button color="primary" (click)="guardarIMgPrueba()">Aceptar</button>
       <button mat-raised-button color="warn" (click)="closeModal()">Cancelar</button>
     </div>
 </ng-template>

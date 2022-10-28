@@ -49,6 +49,11 @@
         </th>
         <th>
           <div class="p-d-flex p-jc-between p-ai-center">
+            Nivel
+          </div>
+        </th>
+        <th>
+          <div class="p-d-flex p-jc-between p-ai-center">
             Grado
           </div>
         </th>
@@ -73,15 +78,18 @@
           <span class="image-text">{{tr.dni}}</span>
         </td>
         <td>
+          <span class="image-text">{{tr.nivel}}</span>
+        </td>
+        <td>
           <span class="image-text">{{tr.grado}}</span>
         </td>
         <td>
           <span [class]="'customer-badge status-' + tr.status">{{tr.seccion}}</span>
         </td>
         <td class="sizes">
-          <button pButton pRipple type="button" icon="pi pi-pencil" styleClass="p-button-sm" class="p-button-rounded p-button-text" (click)="openDialog(tr,'')"></button>
-          <button pButton pRipple type="button" icon="pi pi-eye" styleClass="p-button-sm" class="p-button-rounded p-button-secondary p-button-text" (click)="openDialog(tr,'')"></button>
-          <button pButton pRipple type="button" icon="pi pi-trash"styleClass="p-button-sm"  class="p-button-rounded p-button-success p-button-text"></button>
+          <button pButton pRipple type="button" icon="pi pi-pencil" styleClass="p-button-sm" class="p-button-rounded p-button-text" (click)="openDialog(tr,'Editar')"></button>
+          <button pButton pRipple type="button" icon="pi pi-eye" styleClass="p-button-sm" class="p-button-rounded p-button-secondary p-button-text" (click)="openDialog(tr,'Ver')"></button>
+          <button pButton pRipple type="button" icon="pi pi-trash"styleClass="p-button-sm"  class="p-button-rounded p-button-success p-button-text" (click)="confimacionEliminarDialog(tr)"></button>
         </td>
       </tr>
     </ng-template>
@@ -89,13 +97,16 @@
       <tr>
         <td colspan="7">No customers found.</td>
       </tr>
+
     </ng-template>
   </p-table>
   </div>
-
+  <ngx-spinner type = "ball-scale-ripple-multiple"><p style="color: white" > Loading... </p></ngx-spinner>
   <app-modalAlumnos
   *ngIf="verModalAlumno"
   (showModal)="abrirModalCandidato($event)"
   [dataItems1]="listaAlumno">
   </app-modalAlumnos>
+  <p-confirmDialog [style]="{width: '50vw'}" key="positionDialog" [baseZIndex]="10000"></p-confirmDialog>
   <p-toast></p-toast>
+
