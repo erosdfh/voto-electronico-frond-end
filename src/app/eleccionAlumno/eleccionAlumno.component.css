@@ -1,0 +1,287 @@
+
+
+/*ul {
+  list-style-type: none;
+  margin: 0;
+  align-content: center;
+  overflow: hidden;
+  background-color:#003770;
+
+}
+.mb-4, .my-4 {
+  margin-bottom: 1.5rem!important;
+}
+
+.main-nav h1 span {
+  color: #003770;
+  font-family: 'Segoe UI', Tahoma;
+  font-size: 1.1rem;
+  margin-block-end: 0.83em;
+}
+.pt-4 {
+  padding-top: 0rem !important;
+}
+.main-nav h1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between
+}
+li {
+  float: left;
+}
+
+li a {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  align-items: center;
+  justify-content: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 1rem;
+}
+
+li a:hover {
+  background-color: white;
+  color: black;
+  border-top: 1px solid #003770;
+  border-bottom: 1px solid #003770;
+}
+
+.active {
+  background-color: #003770;
+}*/
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 15px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 200;
+}
+
+body {
+  margin: 0;
+}
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1em;
+}
+
+.row {
+  display: flex;
+}
+
+.center {
+  justify-content: center;
+}
+
+.left {
+  justify-content: flex-start;
+}
+
+.right {
+  justify-content: flex-end;
+}
+
+.between {
+  justify-content: space-between;
+}
+
+.around {
+  justify-content: space-around;
+}
+
+.middle {
+  align-items: center;
+}
+
+.wrap {
+  flex-wrap: wrap;
+}
+
+.top {
+  align-items: flex-start;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.home {
+  background-image: linear-gradient(90deg, #1D406D, #3F67A9);
+  background-attachment: fixed;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+.home__content {
+  text-align: center;
+  margin: 8rem 0 4rem 0;
+}
+
+.home__title--vote {
+  color: #fff;
+  font-size: 80px;
+  font-weight: 600;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.home__title--electronic {
+  color: #F5A623;
+  font-size: 40px;
+  text-transform: uppercase;
+  margin:  1rem 0;
+}
+
+.home__title--year {
+  color: #fff;
+  font-size: 40px;
+}
+
+.home__title--name {
+  display: block;
+  font-weight: 30px;
+  text-align: center;
+  font-weight: 200;
+  color: #fff;
+}
+
+.home__title--input {
+  height: 40px;
+  width: 400px;
+  text-align: center;
+  margin: .5rem;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 2rem 0 2rem 0;
+}
+
+.home__title--button {
+  text-decoration: none;
+  border: 0px;
+  border-radius: 2px;
+  background-color: rgba(255,255,255, .25);
+  display: block;
+  height: 40px;
+  width: 400px;
+  text-align: center;
+  margin: 0 auto;
+  line-height: 40px;
+  color: #fff;
+  font-size: 16px;
+}
+
+.logo {
+  height: 25px;
+  width: 25px;
+  margin: 0;
+}
+
+.logo--img {
+  height: 25px;
+  width: 25px;
+}
+
+.footer__home {
+  padding: 0 4rem;
+}
+
+.logo__footer {
+  margin-left: .25rem;
+  color: #fff;
+}
+.courses {
+  padding: 6rem 0;
+  text-align: center;
+}
+
+.courses__title {
+  font-size: 30px;
+  font-weight: 600;
+  color: #ffffff;
+  text-align: center;
+  margin: 0;
+}
+
+.courses__menssage {
+  font-size: 20px;
+  font-weight: 200;
+  color: #ffffff;
+  display: block;
+  padding:  2rem 0 0 0;
+  text-align: center;
+}
+.courses_timer {
+  font-size: 20px;
+  font-weight: 200;
+  color: #ffffff;
+  display: block;
+  text-align: center;
+}
+.courses__list {
+  padding: 2rem 0;
+  text-align: center;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.course {
+  border: 1px solid #A5AEAE;
+  width: 30%;
+  padding: 1rem;
+}
+
+.course:hover {
+  transform: scale(1.1);
+  border: 0px;
+}
+
+.course--logo {
+  height: 60px;
+  width: 60px;
+  margin: 0 auto;
+}
+
+.course--logo--img {
+  height: 60px;
+  width: 60px;
+}
+
+.course--name {
+  font-size: 20px;
+  font-weight: 600;
+  color: #F5A623;
+  margin: 1rem 0 0 0;
+}
+
+.course--button {
+  background-color: #3673D9;
+  color: #fff;
+  font-size: 20px;
+  border: none;
+  padding: 16px 40px 16px 40px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.course--button1 {
+  background-color: #ff0000;
+  color: #fff;
+  font-size: 20px;
+  border: none;
+  padding: 10px 30px 10px 30px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+.course--button:hover {
+  background-color: #0F3574;
+}
+
