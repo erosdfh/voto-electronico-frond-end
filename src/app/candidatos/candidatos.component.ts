@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { UsuarioService } from '../services/usuario.service';
 import {Product,TopSelling, TableRows, Employee} from './candidatos-data';
@@ -36,6 +37,7 @@ return ['A', 'B', 'C', 'D', 'E', 'F', 'G'][current - 1];
     private usuarioService:UsuarioService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
+    private spinner: NgxSpinnerService
     ) {
     this.topSelling=TopSelling;
     this.trow=Employee;
@@ -53,9 +55,11 @@ return ['A', 'B', 'C', 'D', 'E', 'F', 'G'][current - 1];
 
   listarCandidatos(){
     let param  = +(this.buscarCandidato ? +this.buscarCandidato : "")
-    console.log(param);
+    console.log("hasta qui llego",param);
+    this.spinner.show();
     this.usuarioService.listarCandidato(param).subscribe(
       (result:any)=>{
+        this.spinner.hide();
         if(result.items.length != 0){
           this.listaCandidatos = result
         }else{
