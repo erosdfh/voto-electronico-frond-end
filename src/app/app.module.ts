@@ -29,11 +29,9 @@ import { MatListModule } from '@angular/material/list';
 import {MatInputModule} from '@angular/material/input';
 import { AboutComponent } from './about/about.component';
 import { ModalCandidatosComponent } from './candidatos/modalCandidatos/modalCandidatos.component';
-import { ModalUsuariosComponent } from './usuarios/modalUsuarios/modalUsuarios.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { CandidatosComponent } from './candidatos/candidatos.component';
-import { UsuariosComponent } from './usuarios/usuarios.component';
 import {TableModule} from 'primeng/table';
 import {SliderModule} from 'primeng/slider';
 import { AlumnosComponent } from './alumnos/alumnos.component';
@@ -109,7 +107,6 @@ import { NgxSpinnerModule } from "ngx-spinner";
     MatSelectModule,
     ConfirmDialogModule,
     NgxSpinnerModule,
-
   ],
 
   providers: [MessageService, ConfirmationService ],

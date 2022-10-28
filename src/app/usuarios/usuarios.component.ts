@@ -6,6 +6,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import { ModalUsuariosComponent } from './modalUsuarios/modalUsuarios.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UsuarioService } from '../services/usuario.service';
+import { NgxSpinnerService } from "ngx-spinner";
 import { ConfirmationService, MessageService,ConfirmEventType, PrimeNGConfig } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -66,8 +67,10 @@ buscarUsuario(e:any){
 listarUsuario(){
   this.spinner.show();
   let param = +(this.idUsuario ? +this.idUsuario : "")
+  this.spinner.show();
   this.usuarioService.listarUsuario(param).subscribe(
     (result: any) => {
+      this.spinner.hide();
       if(result.items.length != 0){
         this.lista = result.items;
         this.spinner.hide();

@@ -27,7 +27,6 @@ export class AlumnosComponent {
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService
-
   ) {
     this.trow=Employee;
   }

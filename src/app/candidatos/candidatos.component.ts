@@ -56,9 +56,11 @@ return ['A', 'B', 'C', 'D', 'E', 'F', 'G'][current - 1];
   listarCandidatos(){
     this.spinner.show();
     let param  = +(this.buscarCandidato ? +this.buscarCandidato : "")
-    console.log(param);
+    console.log("hasta qui llego",param);
+    this.spinner.show();
     this.usuarioService.listarCandidato(param).subscribe(
       (result:any)=>{
+        this.spinner.hide();
         if(result.items.length != 0){
           this.listaCandidatos = result;
           this.spinner.hide();
