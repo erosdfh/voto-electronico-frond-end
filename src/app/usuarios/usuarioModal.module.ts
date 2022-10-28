@@ -38,7 +38,7 @@ import { UsuariosComponent } from './usuarios.component';
 import {DialogModule} from 'primeng/dialog';
 import {ConfirmationService} from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
-
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [
@@ -80,7 +80,9 @@ import { MessagesModule } from 'primeng/messages';
     ReactiveFormsModule,
     DialogModule,
     ConfirmDialogModule,
-    MessagesModule
+    MessagesModule,
+    NgxSpinnerModule
+
 
   ],
   exports: [

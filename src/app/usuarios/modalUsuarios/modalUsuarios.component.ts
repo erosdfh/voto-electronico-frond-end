@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Input, Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
@@ -26,6 +27,7 @@ export class ModalUsuariosComponent {
     private usuarioService:UsuarioService,
     private fb : FormBuilder,
     private messageService: MessageService,
+    private spinner: NgxSpinnerService
   ) {
 
   }
@@ -116,6 +118,7 @@ export class ModalUsuariosComponent {
     if(this.validPass == 0){
       return;
     }
+    this.spinner.show();
     console.log("datos");
     let param = {
         "email": ""+this.formGroupParent.value?.email,
@@ -131,9 +134,12 @@ export class ModalUsuariosComponent {
         if(result.body.status == true){
           this.closeModal();
           console.log("resultActu",result);
+          this.spinner.hide();
+        }else{
+          this.spinner.hide();
         }
       }, (error: HttpErrorResponse) => {
-
+        this.spinner.hide();
       });
   }
   actualizaUsuario(){
@@ -167,6 +173,7 @@ export class ModalUsuariosComponent {
     if(this.validPassEditar == 0){
       return;
     }
+    this.spinner.show();
     let param = {
         "email": ""+this.formGroupParent.value?.email,
         "estado": "A",
@@ -183,9 +190,13 @@ export class ModalUsuariosComponent {
         if(result.body.status == true){
           this.closeModal();
           console.log("resultActu",result);
+          this.spinner.hide();
+        }else{
+          this.spinner.hide();
         }
 
       }, (error: HttpErrorResponse) => {
+        this.spinner.hide();
       });
   }
 

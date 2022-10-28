@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { UsuarioService } from '../services/usuario.service';
 import {Product,TopSelling, TableRows, Employee} from './candidatos-data';
@@ -36,6 +37,7 @@ return ['A', 'B', 'C', 'D', 'E', 'F', 'G'][current - 1];
     private usuarioService:UsuarioService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
+    private spinner: NgxSpinnerService
     ) {
     this.topSelling=TopSelling;
     this.trow=Employee;
@@ -52,18 +54,22 @@ return ['A', 'B', 'C', 'D', 'E', 'F', 'G'][current - 1];
   }
 
   listarCandidatos(){
+    this.spinner.show();
     let param  = +(this.buscarCandidato ? +this.buscarCandidato : "")
     console.log(param);
     this.usuarioService.listarCandidato(param).subscribe(
       (result:any)=>{
         if(result.items.length != 0){
-          this.listaCandidatos = result
+          this.listaCandidatos = result;
+          this.spinner.hide();
         }else{
           this.messageService.add({severity:'warn', summary: 'Advertencia', detail: 'No existe registros para mostrar'});
+          this.spinner.hide();
         }
         console.log(result);
       },(error: HttpErrorResponse) => {
         this.messageService.add({severity:'error', summary: 'Error', detail: 'Verificar su conexion y vuelve a intentarlo'});
+        this.spinner.hide();
       })
   }
   openDialog(e:string, editar:any): void {
@@ -100,14 +106,19 @@ confimacionEliminarDialog(e:any) {
 }
 eliminar(e:any){
   console.log(e);
+  this.spinner.show();
 this.usuarioService.eliminarCandidato(e.idCandidato).subscribe(
   (result:any)=>{
     if(result.body.status == true){
       this.messageService.add({severity:'success', summary: 'Confirmado', detail: 'El registro de elimino de forma correcta'});
       this.listarCandidatos();
+      this.spinner.hide();
+    }else{
+      this.spinner.hide();
     }
   }, (error: HttpErrorResponse) => {
     this.messageService.add({severity:'error', summary: 'Error', detail: 'Verificar su conexion y vuelve a intentarlo'});
+    this.spinner.hide();
   });
 
 

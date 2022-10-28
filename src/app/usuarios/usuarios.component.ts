@@ -7,6 +7,7 @@ import { ModalUsuariosComponent } from './modalUsuarios/modalUsuarios.component'
 import { HttpErrorResponse } from '@angular/common/http';
 import { UsuarioService } from '../services/usuario.service';
 import { ConfirmationService, MessageService,ConfirmEventType, PrimeNGConfig } from 'primeng/api';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-usuarios',
@@ -33,7 +34,8 @@ export class UsuariosComponent implements OnInit {
     public dialog: MatDialog, private usuarioService:UsuarioService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private primengConfig: PrimeNGConfig
+    private primengConfig: PrimeNGConfig,
+    private spinner: NgxSpinnerService
     ) {
     this.trow=Employee;
   }
@@ -62,16 +64,20 @@ buscarUsuario(e:any){
   }
 }
 listarUsuario(){
+  this.spinner.show();
   let param = +(this.idUsuario ? +this.idUsuario : "")
   this.usuarioService.listarUsuario(param).subscribe(
     (result: any) => {
       if(result.items.length != 0){
         this.lista = result.items;
+        this.spinner.hide();
       }else{
         this.messageService.add({severity:'warn', summary: 'Advertencia', detail: 'No existe registros para mostrar'});
+        this.spinner.hide();
       }
     },(error: HttpErrorResponse) => {
       this.messageService.add({severity:'error', summary: 'Error', detail: 'Verificar su conexion y vuelve a intentarlo'});
+      this.spinner.hide();
     });
   }
   confimacionEliminarDialog(e:any) {
@@ -92,14 +98,17 @@ listarUsuario(){
         });
     }
     eliminar(e:any){
+      this.spinner.show();
       this.usuarioService.elimarUsuario(e.idUsers).subscribe(
         (result:any)=>{
           if(result.body.status == true){
             this.messageService.add({severity:'success', summary: 'Confirmado', detail: 'El registro de elimino de forma correcta'});
             this.listarUsuario();
+            this.spinner.hide();
           }
         }, (error: HttpErrorResponse) => {
           this.messageService.add({severity:'error', summary: 'Error', detail: 'Verificar su conexion y vuelve a intentarlo'});
+          this.spinner.hide();
         });
 
 

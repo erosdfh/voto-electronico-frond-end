@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit,Inject,EventEmitter, ViewEncapsulation } from '@angular/core';
 import { Input,  Output } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import * as XLXS from 'xlsx';
@@ -36,6 +37,7 @@ export class ModalAlumnosComponent implements OnInit {
     private usuarioService:UsuarioService,
     private fb: FormBuilder,
     private messageService: MessageService,
+    private spinner: NgxSpinnerService
   ) {
     this.formGropuParent = this.fb.group({
       ApNombres: new FormControl ('', [Validators.required]),
@@ -93,6 +95,7 @@ export class ModalAlumnosComponent implements OnInit {
     if(this.formGropuParent.invalid){
       return;
     }
+    this.spinner.show();
     let param =
       [{
       "idalumno": this.dataItems1.e.idalumno,
@@ -108,8 +111,12 @@ export class ModalAlumnosComponent implements OnInit {
           console.log(result);
           this.listResult= result;
           this.closeModal();
+          this.spinner.hide();
+        }else {
+          this.spinner.hide();
         }
       },(error: HttpErrorResponse) => {
+        this.spinner.hide();
       });
   }
   accion(){
@@ -132,6 +139,7 @@ export class ModalAlumnosComponent implements OnInit {
     if(this.formGroupParent1.invalid){
       return;
     }
+    this.spinner.show();
         let fileReader = new FileReader();
           fileReader.onload = (e) => {
               this.arrayBuffer = fileReader.result;
@@ -162,10 +170,13 @@ export class ModalAlumnosComponent implements OnInit {
                   if(result.body.status == true){
                     this.listResult = result;
                     this.closeModal();
+                    this.spinner.hide();
+                  }else{
+                    this.spinner.hide();
                   }
                   console.log(result);
                 },(error: HttpErrorResponse) => {
-
+                  this.spinner.hide();
                 });
           }
           fileReader.readAsArrayBuffer(this.file);

@@ -94,14 +94,19 @@ abrirModalCandidato(e:any){
     });
   }
   eliminarAlumno(e:any){
+    this.spinner.show();
     this.usuarioService.eliminarAlumno(e.idalumno).subscribe(
       (result:any)=>{
         if(result.body.status == true){
           this.messageService.add({severity:'success', summary: 'Confirmado', detail: 'Se elimino de forma correcta'});
           this.listaralumno();
+          this.spinner.hide();
+        }else{
+          this.spinner.hide();
         }
       }, (error: HttpErrorResponse) => {
         this.messageService.add({severity:'error', summary: 'Error', detail: 'Verificar su conexion y vuelve a intentarlo'});
+        this.spinner.hide();
       });
   }
   /*onFileChange(evt: any) {

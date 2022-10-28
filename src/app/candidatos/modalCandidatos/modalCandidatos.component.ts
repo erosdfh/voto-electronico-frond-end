@@ -3,6 +3,7 @@ import { Input, Component, OnInit, Inject, Output, EventEmitter } from '@angular
 import { FormArray, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { ModalCandidatos } from '../candidatos-data';
@@ -22,7 +23,9 @@ export class ModalCandidatosComponent {
   verBotonEliminarAgregar:boolean = false;
   titulo: any = [];
   archivos: any = [];
-  previsualizacion: String;
+  archivos1: any = [];
+  previsualizacionFoto: String = '';
+  previsualizacionLogo: String = '';
 
   @Input() dataItems: any = null;
   @Output() showModal= new EventEmitter<boolean>();
@@ -30,7 +33,8 @@ export class ModalCandidatosComponent {
     private fb:FormBuilder,
     private usuarioService: UsuarioService,
     private messageService: MessageService,
-    private sanitezer: DomSanitizer
+    private sanitezer: DomSanitizer,
+    private spinner: NgxSpinnerService
   ) {
     this.formGroupParent = this.fb.group({
       nombreApellido: new FormControl('', [ Validators.required]),
@@ -46,9 +50,11 @@ export class ModalCandidatosComponent {
     console.log("modal", this.dataItems);
     if(this.dataItems.titulo == 'Editar'){
       this.formGroupParent.controls.nombreApellido.setValue(this.dataItems.e.candidato);
-      this.formGroupParent.controls.foto.setValue(this.dataItems.e.image);
+      //this.formGroupParent.controls.foto.setValue(1);
+      this.previsualizacionLogo = this.dataItems.e.logo;
       this.formGroupParent.controls.partidoPoli.setValue(this.dataItems.e.partidoPolitico);
-      this.formGroupParent.controls.logo.setValue(this.dataItems.e.logo);
+      //this.formGroupParent.controls.logo.setValue('img');
+      this.previsualizacionFoto = this.dataItems.e.image;
       this.formGroupParent.controls.observacion.setValue(this.dataItems.e.observacion);
       this.dataItems.e.regidor.forEach((element:any) => {
       (this.formGroupParent.controls.regidores as FormArray).push(
@@ -76,9 +82,9 @@ export class ModalCandidatosComponent {
       this.verBotonEliminarAgregar = true;
       this.formGroupParent = this.fb.group({
         nombreApellido: new FormControl({value: this.dataItems.e.candidato, disabled : true}),
-        foto: new FormControl({value: this.dataItems.e.image, disabled : true}),
+        //foto: new FormControl({value: this.dataItems.e.image, disabled : true}),
         partidoPoli: new FormControl({value: this.dataItems.e.partidoPolitico, disabled : true}),
-        logo: new FormControl({value: this.dataItems.e.logo, disabled : true}),
+        //logo: new FormControl({value: this.dataItems.e.logo, disabled : true}),
         observacion: new FormControl({value: this.dataItems.e.observacion, disabled : true}),
         regidores : this.fb.array([])
       });
@@ -111,12 +117,22 @@ export class ModalCandidatosComponent {
     console.log("1225555",this.archivos);
  }*/
 
- capturarImagen(event:any){
-    let archivoCapturado = event.target.files[0];
-    this.archivos.push(archivoCapturado);
-    this.extraerbase64(archivoCapturado).then((imagen:any) =>{
-      this.previsualizacion= imagen.base;
-      console.log("dsad",imagen);
+ capturarLogo(event:any){
+  console.log(event);
+  let archivoCapturadoLogo = event.target.files[0];
+  this.archivos1.push(archivoCapturadoLogo);
+  this.extraerbase64(archivoCapturadoLogo).then((imagen:any) =>{
+    this.previsualizacionLogo = imagen.base;
+    console.log("logo",imagen);
+  });
+ }
+ capturarFoto(event:any){
+  console.log(this.formGroupParent.value?.foto);
+    let archivoCapturadoFoto = event.target.files[0];
+    this.archivos.push(archivoCapturadoFoto);
+    this.extraerbase64(archivoCapturadoFoto).then((imagen:any) =>{
+      this.previsualizacionFoto = imagen.base;
+      console.log("foto",imagen);
     });
     //console.log("foto",event.target.files);
   }
@@ -132,18 +148,15 @@ export class ModalCandidatosComponent {
       }
   })
 
-  guardarIMgPrueba(){
-    console.log(this.formGroupParent.value?.foto)
-  }
-
-
-
   closeModal(){
     this.isVisible = false;
     console.log(this.resultadoGuardadoActualizado);
       this.showModal.emit(false);
+      this.previsualizacionFoto = '';
+      this.previsualizacionLogo = '';
   }
   registrarCandidato(){
+
     let lisRegidores:any = [];
     console.log(this.formGroupParent);
     this.formGroupParent.markAllAsTouched();
@@ -152,6 +165,7 @@ export class ModalCandidatosComponent {
       console.log("formgroup", this.formGroupParent);
       return;
     }
+    this.spinner.show();
     (this.formGroupParent.get('regidores')['controls']).forEach((element:any) => {
       console.log("aaaa",element.value?.cargo);
       lisRegidores.push({
@@ -161,21 +175,25 @@ export class ModalCandidatosComponent {
     });
     let param = {
       "candidato": ""+this.formGroupParent.value?.nombreApellido,
-      "image": ""+this.formGroupParent.value?.foto.name,
+      "image": ""+this.previsualizacionFoto,
       "partidoPolitico": ""+this.formGroupParent.value?.partidoPoli,
-      "logo": ""+this.formGroupParent.value?.logo.name,
+      "logo": ""+this.previsualizacionLogo,
       "observacion": ""+this.formGroupParent.value?.observacion,
       "regidor": lisRegidores
     }
     console.log(param);
     this.usuarioService.registrarCandidato(param).subscribe(
       (result:any)=>{
-        if(result.body.status == true){
-        this.resultadoGuardadoActualizado = result.body.status
         console.log(result);
-        this.closeModal();
+        if(result.body.status == true){
+          this.spinner.hide();
+          this.resultadoGuardadoActualizado = result.body.status
+          this.closeModal();
+        }else{
+          this.spinner.hide();
         }
       }, (error: HttpErrorResponse) => {
+        this.spinner.hide();
       });
   }
   accion(){
@@ -188,12 +206,14 @@ export class ModalCandidatosComponent {
 
   }
   actualizarCandidato(){
-    console.log("foto",this.formGroupParent.value?.foto);
+    this.formGroupParent.controls.logo.setErrors(null);
+    this.formGroupParent.controls.foto.setErrors(null);
     this.formGroupParent.markAllAsTouched();
     if(this.formGroupParent.invalid){
       return;
     }
     console.log("aqui");
+    this.spinner.show();
     let listRegidoresActualizar:any = [];
     console.log(this.formGroupParent);
     (this.formGroupParent.get('regidores')['controls']).forEach((element:any) => {
@@ -207,9 +227,9 @@ export class ModalCandidatosComponent {
     let param = {
         "idCandidato": this.dataItems.e.idCandidato,
         "candidato": ""+this.formGroupParent.value?.nombreApellido,
-        "image": ""+this.formGroupParent.value?.foto.name,
+        "image": ""+ this.previsualizacionFoto,
         "partidoPolitico": ""+this.formGroupParent.value?.partidoPoli,
-        "logo": ""+this.formGroupParent.value?.logo.name,
+        "logo": ""+this.previsualizacionLogo,
         "observacion": ""+this.formGroupParent.value?.observacion,
         "regidor": listRegidoresActualizar
       }
@@ -219,9 +239,13 @@ export class ModalCandidatosComponent {
           if(result.body.status == true){
             this.resultadoGuardadoActualizado = result.body.status
             this.closeModal();
+            this.spinner.hide();
             console.log("resul", result);
+          }else{
+            this.spinner.hide();
           }
         }, (error: HttpErrorResponse) => {
+          this.spinner.hide();
         });
   }
   agregarRegidor(){
