@@ -16,52 +16,66 @@
     <li><a href="#contacto">Contacto</a></li>
     <li><a href="#Ayuda">Ayuda</a></li>
   </ul>
-</nav>-->
-<div class="container">
+</nav>--><br><br><br><br>
+<div class="container" >
   <h1 class="courses__title">Realizar elección de tu Canditato Favorito</h1>
   <h4 class="course--name">Tiempo restante</h4>
   <br>
+  <div align=" center">
   <button class="course--button1">{{minuto}} MIN</button> &nbsp;&nbsp;&nbsp;
   <button class="course--button1">{{segundo}} SEC</button>
+</div>
   <span class="courses__menssage">Dar click sobre el candidato de tu preferencia:</span>
   <section class="courses__list row center middle wrap">
-    <article class="course">
+    <a>
+    <article class="course" style="cursor: pointer;" (click)="confimacionEliminarDialog($event)">
       <figure class="course--logo">
         <img class="course--logo--img" src="assets/images/onpe.png" alt="">
       </figure>
       <h3 class="course--name">Candidato por la paz</h3>
     </article>
-    <article class="course">
+  </a>
+    <a class="joooo">
+    <article class="course" style="cursor: pointer;" (click)="confimacionEliminarDialog($event)">
       <figure class="course--logo">
         <img class="course--logo--img" src="assets/images/candidato1.png" alt="">
       </figure>
       <h3 class="course--name">Unidos se puede</h3>
     </article>
-    <article class="course">
+    </a>
+  <a>
+    <article class="course" style="cursor: pointer;" (click)="confimacionEliminarDialog($event)">
       <figure class="course--logo">
         <img class="course--logo--img" src="assets/images/candidatos2.jpg" alt="">
       </figure>
       <h3 class="course--name">Por un futuro mejor</h3>
     </article>
-    <article class="course">
+  </a>
+    <a>
+    <article class="course" style="cursor: pointer;" (click)="confimacionEliminarDialog($event)">
       <figure class="course--logo">
         <img class="course--logo--img" src="assets/images/candidato3.jpg" alt="">
       </figure>
       <h3 class="course--name">todos juntos</h3>
     </article>
-    <article class="course">
+  </a>
+    <a>
+    <article class="course" style="cursor: pointer;" (click)="confimacionEliminarDialog($event)">
       <figure class="course--logo">
         <img class="course--logo--img" src="assets/images/candidato4.png" alt="">
       </figure>
       <h3 class="course--name">Personas Juntas</h3>
     </article>
-    <article class="course">
+    </a>
+    <a>
+    <article class="course" style="cursor: pointer;" (click)="confimacionEliminarDialog($event)">
       <figure class="course--logo">
         <img class="course--logo--img" src="assets/images/candidato5.png" alt="">
       </figure>
       <h3 class="course--name">patrio</h3>
     </article>
+  </a>
   </section>
-  <button class="course--button">Realizar Voto</button>
 </div>
 <p-toast></p-toast>
+<p-confirmDialog [style]="{width: '30vw'}" key="positionDialog" [baseZIndex]="10000"></p-confirmDialog>

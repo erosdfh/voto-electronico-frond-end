@@ -18,6 +18,14 @@ const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full'
   },
+
+         {
+          path: 'eleccionAlumno',
+          component: EleccionAlumnoComponent,
+          pathMatch: 'full',
+          data: {
+          title: 'Login Page'
+        }},
   {
     path: 'menu',
     component: DashboardComponent,
@@ -68,12 +76,6 @@ const routes: Routes = [
         {
           path: 'ReporteTotal',
           component: ReporteTotalComponent,
-          data: {
-          title: 'Login Page'
-        }},
-         {
-          path: 'eleccionAlumno',
-          component: EleccionAlumnoComponent,
           data: {
           title: 'Login Page'
         }}
