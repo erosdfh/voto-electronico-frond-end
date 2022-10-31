@@ -59,4 +59,8 @@ actualizarAlumno(param:any){
 eliminarAlumno(idAlumno: number){
   return this.http.get(this.base + 'alumno/eliminarAlumno?id=' + idAlumno);
 }
+login(param:any){
+  return this.http.post(this.base + 'votos/login' , param);
+}
+
 }

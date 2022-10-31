@@ -17,8 +17,9 @@
       name="password"
       placeholder="Constraseña"
       required="required"
+      [(ngModel)]="contra"
     />
-    <button type="submit" (click)="showSuccess()">Ingresar</button>
+    <button type="submit" (click)="login()">Ingresar</button>
   </form>
 </div>
 <p-toast></p-toast>
